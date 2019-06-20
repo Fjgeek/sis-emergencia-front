@@ -27,14 +27,14 @@
     <br />
     <br />
      <div class="container">
-        <form onsubmit="peticion">
+        <form onsubmit="atendido(this)">
             <div class="form-group">
                 <label for="sr-only">Introducir ID de cama:</label>
-                <input type="text" class="form-control" id="Usuario" placeholder="ID de Cama">
+                <input type="text" class="form-control" id="idCamaFin" placeholder="ID de Cama">
             </div>
             <div class="form-group">
                 <label for="sr-only">Introducir código RFID:</label>
-                <input type="text" class="form-control" id="Usuario" placeholder="Código RFID">
+                <input type="text" class="form-control" id="rfid" placeholder="Código RFID">
             </div>
             <!--Ingresa dirección a la que apunta el botón en "LLENAR"-->
               <button type="submit" class="btn btn-primary btn-lg btn-block active" role="button" aria-pressed="true">Atención Realizada</button>
@@ -57,6 +57,23 @@
           type: 'GET',
           //url: 'http://localhost/sis-emergencia-api/peticion/'+nArduino,
           url: 'http://localhost:8080/sis-emergencia-api/peticion/'+nArduino,
+          success: function(data){
+            console.log(data);
+          },
+          error: function(err){
+            console.error(err);
+          }
+        })
+      }
+
+      function atendido(){
+        event.preventDefault();
+        var nArduino = $("#idCamaFin").val();
+        var nRfid = $("#rfid").val();
+        jQuery.ajax({
+          type: 'GET',
+          //url: 'http://localhost/sis-emergencia-api/atendido/'+nArduino+'/'+nRfid,
+          url: 'http://localhost:8080/sis-emergencia-api/atendido/'+nArduino+'/'+nRfid,
           success: function(data){
             console.log(data);
           },
