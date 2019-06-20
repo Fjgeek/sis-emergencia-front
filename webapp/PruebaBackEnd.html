@@ -13,13 +13,13 @@
   <body>
     <h1>Prueba para Backend</h1>
     <div class="container">
-        <form action="/action_page.php">
+        <form onsubmit="peticion(this)">
           <div class="form-group">
             <label for="sr-only">Introducir ID de cama:</label>
-            <input type="text" class="form-control" id="Usuario" placeholder="ID de Cama">
+            <input type="text" class="form-control" id="idCama" placeholder="ID de Cama">
           </div>
           <!--Ingresar dirección a la que apunta el botón en "LLENAR"-->
-          <a href="LLENAR" type="submit" class="btn btn-primary btn-lg btn-block active" role="button" aria-pressed="true">Generar Alerta</a>
+          <button type="submit" class="btn btn-primary btn-lg btn-block active" role="button" aria-pressed="true">Generar Alerta</button>
         </form>
         </div>
     <br />
@@ -27,7 +27,7 @@
     <br />
     <br />
      <div class="container">
-        <form action="/action_page.php">
+        <form onsubmit="peticion">
             <div class="form-group">
                 <label for="sr-only">Introducir ID de cama:</label>
                 <input type="text" class="form-control" id="Usuario" placeholder="ID de Cama">
@@ -37,14 +37,33 @@
                 <input type="text" class="form-control" id="Usuario" placeholder="Código RFID">
             </div>
             <!--Ingresa dirección a la que apunta el botón en "LLENAR"-->
-              <a href="LLENAR" type="submit" class="btn btn-primary btn-lg btn-block active" role="button" aria-pressed="true">Atención Realizada</a>
+              <button type="submit" class="btn btn-primary btn-lg btn-block active" role="button" aria-pressed="true">Atención Realizada</button>
         </form>
         </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script>
+      function peticion(){
+        event.preventDefault();
+        var nArduino = $("#idCama").val();
+        jQuery.ajax({
+          type: 'GET',
+          url: 'http://localhost:8080/sis-emergencia-api/peticion/'+nArduino,
+          success: function(data){
+            console.log(data);
+          },
+          error: function(err){
+            console.error(err);
+          }
+        })
+      }
+    </script>
   </body>
 </html>
