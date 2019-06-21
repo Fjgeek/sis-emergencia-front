@@ -72,8 +72,8 @@
         var nRfid = $("#rfid").val();
         jQuery.ajax({
           type: 'GET',
-          //url: 'http://localhost/sis-emergencia-api/atendido/'+nArduino+'/'+nRfid,
-          url: 'http://localhost:8080/sis-emergencia-api/atendido/'+nArduino+'/'+nRfid,
+          url: 'http://localhost/sis-emergencia-api/atendido/'+nArduino+'/'+nRfid,
+          //url: 'http://localhost:8080/sis-emergencia-api/atendido/'+nArduino+'/'+nRfid,
           success: function(data){
             console.log(data);
           },
