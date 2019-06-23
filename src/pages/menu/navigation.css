@@ -1,0 +1,39 @@
+.Nav-container{
+  padding: 64px 0px 0px 0px;
+}
+.Nav-menu-list{
+  padding: 0px;
+  margin: 0px;
+  list-style: none;
+}
+.Nav-menu-list li a{
+  display: block;
+  position: relative;
+  padding: 12px 68px;
+  text-decoration: none;
+}
+.active-menu{
+  background: #403d44!important;
+  color: #ffffff!important;
+}
+.Nav-user{
+  padding: 25px 0px;
+  text-align: center;
+  overflow: hidden;
+}
+.Nav-user i{
+  color: #fff!important;
+  font-size: 40px;
+  padding: 15px;
+  border-radius: 50%;
+  border: 1.5px solid;
+  margin-bottom: 15px;
+  user-select: none;
+  outline: none;
+}
+.Nav-user-button{
+  display: block;
+  color: #fff!important;
+  outline: none;
+  margin: 0 auto;
+}

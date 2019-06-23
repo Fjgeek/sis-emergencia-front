@@ -1,0 +1,26 @@
+.login-form{
+  position: relative;
+  text-align: center;
+  padding: 55px 0px;
+}
+.login-form-logo{
+  border: 1px solid #cecece;
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  text-align: center;
+  line-height: 180px;
+  margin: 25px auto;
+}
+.login-form-logo i{
+  font-size: 50px;
+}
+.login-form-title{
+  font-family:  'Open Sans',-apple-system,sans-serif;
+  font-weight: 600;
+}
+.login-form-title small{
+  display: block;
+  font-family:  'Open Sans',-apple-system,sans-serif;
+  font-weight: 100;
+}
