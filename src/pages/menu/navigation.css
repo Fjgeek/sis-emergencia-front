@@ -13,7 +13,7 @@
   text-decoration: none;
 }
 .active-menu{
-  background: #403d44!important;
+  background: #cdcccc!important;
   color: #ffffff!important;
 }
 .Nav-user{
@@ -22,8 +22,8 @@
   overflow: hidden;
 }
 .Nav-user i{
-  color: #fff!important;
-  font-size: 40px;
+  color: #3f51b5!important;
+  font-size: 60px;
   padding: 15px;
   border-radius: 50%;
   border: 1.5px solid;

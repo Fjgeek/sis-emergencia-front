@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 /* Components */
 import { Redirect } from 'react-router-dom';
 import Header from '../../common/header';
-import PositionForm from './position-form';
+import PositionForm from './roombed-form';
 import Action from '../../common/action';
 import Loading from '../../common/loading';
 
