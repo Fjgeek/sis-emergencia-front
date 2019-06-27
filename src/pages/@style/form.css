@@ -47,3 +47,16 @@
 .graduate-form--action button{
   margin-right: 25px;
 }
+.graduate-label--load{
+  color: #059706
+}
+
+/* BTN FORMS */
+.graduate-btn--read{
+  background-color: #242f24!important;
+  margin-top: 15px!important;
+}
+.graduate-btn--cancel{
+  background-color: #dc3545!important;
+  margin-top: 15px!important;
+}

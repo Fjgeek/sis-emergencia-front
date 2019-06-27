@@ -117,7 +117,7 @@ class Header extends Component {
                       className="Header-link">
                       <Button
                         raised
-                        className="Header-btn"
+                        className={ action.theme }
                       >
                         { action.title }
                       </Button>

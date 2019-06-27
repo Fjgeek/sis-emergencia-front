@@ -56,6 +56,11 @@
   color: #000!important;
   margin-right: 10px;
 }
+.Header-btn-more{
+  background-color: #d6d6d6!important;
+  color: #000!important;
+  margin-right: 10px;
+}
 .Header-link{
   text-decoration: none!important;
 }

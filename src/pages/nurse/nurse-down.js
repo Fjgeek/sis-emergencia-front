@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import '../@style/tables.css';
 /* Components */
 import Header from '../../common/header';
 /* Data */
@@ -8,7 +7,7 @@ import NurseHttp from '../@data/nurse-http';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 
-class NurseList extends Component {
+class NurseDown extends Component {
   constructor(props){
     super();
     this.state = {
@@ -35,7 +34,7 @@ class NurseList extends Component {
   componentDidMount() {
     this.addFilterPlaceholder();
     let self = this;
-    NurseHttp.getAll(
+    NurseHttp.getAllDisabled(
       (data)=>{
         self.setState({
           data: data.result
@@ -51,22 +50,9 @@ class NurseList extends Component {
     return (
       <section>
         <Header
-          title = "Enfermeras"
+          title = "Bajas"
           match = { this.props.match }
           history = { this.props.history }
-          actions={[
-              {
-                on: `${this.props.match.path}/nuevo`,
-                title: 'Añadir',
-                theme: 'Header-btn'
-              },
-              {
-                on: `${this.props.match.path}/bajas`,
-                title: 'Ver Bajas',
-                theme: 'Header-btn-more'
-
-              },
-          ]}
           theme = {{
             background: "#008000",
             color: "#fff"
@@ -125,9 +111,9 @@ class NurseList extends Component {
                   className: "table-created"
                 },
                 {
-                  Header: "Modificado",
+                  Header: "Deshabilitado",
                   accessor: "updated",
-                  className: "table-updated"
+                  className: "table-disabled"
                 }
               ]
             }
@@ -140,4 +126,4 @@ class NurseList extends Component {
   }
 }
 
-export default NurseList;
+export default NurseDown;

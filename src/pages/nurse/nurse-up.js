@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-
+import '../@style/container.css';
+import '../@style/form.css';
 /* Components */
 import { Redirect } from 'react-router-dom';
 import Header from '../../common/header';
-import NurseForm from './nurse-form';
-import Action from '../../common/action';
 import Loading from '../../common/loading';
+import Action from '../../common/action';
+import NurseRead from './nurse-read';
+import {
+  Subtitle1
+} from '@material/react-typography';
 
 /* Interface */
 import { NurseSchema } from './nurse-schema';
@@ -14,13 +18,16 @@ import { NurseSchema } from './nurse-schema';
 import NurseHttp from '../@data/nurse-http';
 import ReadHttp from '../@data/read-http';
 import { getUrl } from '../@data/get-url';
+import MaterialIcon from '@material/react-material-icon';
 
-class NurseNew extends Component {
+class PersonDetail extends Component {
   constructor(props){
     super();
     this.state = {
       data: Object.assign({},NurseSchema),
-      load: false,
+      changePass: false,
+      load: true,
+      loadText: 'Cargando Información',
       completed: false,
       urlCompleted: '/',
       readInfo:{
@@ -32,21 +39,59 @@ class NurseNew extends Component {
       }
     }
   }
+  componentDidMount(){
+    const id = this.props.match.params.id;
+    let url = getUrl.back(this.props.history.location.pathname);
+    let self = this;
+    NurseHttp.getId(
+      id,
+      (data)=>{
+        self.setState({
+          urlCompleted: url.path,
+          load: false,
+          data: {
+            ...data.result
+          }
+        });
+      },
+      (error)=>{
+        console.log(error);
+      }
+    );
+  }
+  componentWillUnmount(){
+    this.cancelRead();
+  }
   handleSend = (e)=>{
     e.preventDefault();
+    let data = this.state.data;
     this.setState({
-      load: true
+      load: true,
+      loadText: 'Guardando'
     });
-    let self = this;
-    console.log(this.state.data);
-    // NurseHttp.add(this.state.data,
-    //   (data)=>{
-    //     self.completeSend(data.result);
-    //   },
-    //   (error)=>{
-    //     self.completeError(error.result);
-    //   });
+    if(this.state.changePass){
+      if(data.passwords === data.passNow ){
+        data.pass = data.passNew;
+        this.sendUpdate(data);
+      }else{
+        alert('Contraseña anterior no coincide, acceso Denegado');
+      }
+    }else{
+      data.pass = data.passwords;
+      this.sendUpdate(data);
+    }
   }
+  sendUpdate = (data)=>{
+    let self = this;
+    NurseHttp.update(data,
+      (data)=>{
+        self.completeSend(data);
+      },
+      (error)=>{
+        self.completeError(error);
+      })
+  }
+
   completeSend = (result)=>{
     //console.log(result);
     this.setState({
@@ -58,6 +103,7 @@ class NurseNew extends Component {
       load: false
     })
   }
+
   changeState = (keyObject)=>{
     let name = Object.keys(keyObject)[0];
     let data = this.state.data;
@@ -66,15 +112,7 @@ class NurseNew extends Component {
       data: data
     })
   }
-  componentDidMount(){
-    let url = getUrl.back(this.props.history.location.pathname);
-    this.setState({
-      urlCompleted: url.path
-    });
-  }
-  componentWillUnmount(){
-    this.cancelRead();
-  }
+
   startRead = ()=>{
     let self = this;
     this.startCount();
@@ -95,8 +133,9 @@ class NurseNew extends Component {
           });
         }else{
           // ya en uso
+          console.log(this.props.history);
           readInfo.message = `El RFID ya esta en USO por: ${data.result.user.first_name} ${data.result.user.last_name}`;
-          readInfo.linkRef = `./${data.result.user.id_nurse}`
+          readInfo.linkRef = `../${data.result.user.id_nurse}`
           self.setState({
             data: dataNew,
             readInfo
@@ -139,37 +178,58 @@ class NurseNew extends Component {
       readInfo
     });
   }
-
   render() {
     return (
       <div>
         <Header
-          title = "Añadir Enfermera"
+          title = "Habilitar Enfermera"
           match = { this.props.match }
-          history = { this.props.history }
           theme = {{
-            background: "#116d11",
+            background: "#008000",
             color:"#fff"
 
           }}
         />
+
         {
-          this.state.load ?
-          <Loading title="Guardando Datos..." />
-          :
+          !this.state.load ?
           <form onSubmit={ this.handleSend }>
-            <NurseForm
-              changeState = { this.changeState }
-              { ...this.state.data }
-              readInfo = { this.state.readInfo }
-              startRead = { this.startRead }
-              cancelRead = { this.cancelRead }
-            />
+            <div className="graduate-container">
+              <div className="graduate-form">
+
+                <fieldset className="graduate-form--fieldset">
+                  <legend>
+                    Cuenta de:
+                  </legend>
+                  <aside className="graduate-form--control">
+                    <Subtitle1
+                      style={{
+                        color:'#888787'
+                      }}
+                    >
+                      { this.state.data.first_name } { this.state.data.last_name} - { this.state.data.cellphone }
+                    </Subtitle1>
+                  </aside>
+                </fieldset>
+
+                <NurseRead
+                  { ...this.state.data }
+                  { ...this.state.readInfo }
+                  changeState = { this.changeState }
+                  startRead = { this.startRead }
+                  cancelRead = { this.cancelRead }
+                />
+              </div>
+            </div>
+
             <Action
               match = { this.props.match }
             />
           </form>
+          :
+          <Loading title={ this.state.loadText }/>
         }
+
         {
           this.state.completed?
           <Redirect to={ this.state.urlCompleted } />
@@ -181,4 +241,4 @@ class NurseNew extends Component {
   }
 }
 
-export default NurseNew;
+export default PersonDetail;

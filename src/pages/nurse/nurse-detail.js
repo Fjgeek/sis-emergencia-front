@@ -3,14 +3,14 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import Header from '../../common/header';
 import Loading from '../../common/loading';
-import PersonForm from './nurse-form';
+import NurseForm from './nurse-form';
 import Action from '../../common/action';
 
 /* Interface */
 import { NurseSchema } from './nurse-schema';
 
 /* Data */
-import PersonHttp from '../@data/nurse-http';
+import NurseHttp from '../@data/nurse-http';
 import { getUrl } from '../@data/get-url';
 
 class PersonDetail extends Component {
@@ -29,7 +29,7 @@ class PersonDetail extends Component {
     const id = this.props.match.params.id;
     let url = getUrl.back(this.props.history.location.pathname);
     let self = this;
-    PersonHttp.getId(
+    NurseHttp.getId(
       id,
       (data)=>{
         self.setState({
@@ -68,7 +68,7 @@ class PersonDetail extends Component {
   }
   sendUpdate = (data)=>{
     let self = this;
-    PersonHttp.update(data,
+    NurseHttp.update(data,
       (data)=>{
         self.completeSend(data);
       },
@@ -120,7 +120,7 @@ class PersonDetail extends Component {
         {
           !this.state.load ?
           <form onSubmit={ this.handleSend }>
-            <PersonForm
+            <NurseForm
               editForm
               changeState = { this.changeState }
               changePass = { this.state.changePass }

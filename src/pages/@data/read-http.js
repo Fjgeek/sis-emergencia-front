@@ -18,13 +18,13 @@ const ReadHttp = {
         if(r.data.status){
           response(r.data);
         }else{
-          if(index == 10){
+          if(index == 20){
             response(r.data);
           }else{
             console.log('entra '+index);
             setTimeout(()=>{
               ReadHttp.readCode(index+1,response,error)
-            },700);
+            },500);
           }
         }
       })

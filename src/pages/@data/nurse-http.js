@@ -11,6 +11,15 @@ const NurseHttp = {
       error(e);
     })
   },
+  getAllDisabled: (response, error)=>{
+    axios.get(BASE+'nurse/all/disabled')
+    .then(function (r) {
+      response(r.data);
+    })
+    .catch(function (e) {
+      error(e);
+    })
+  },
   getId: (id,response, error)=>{
     axios.get(BASE+'nurse/'+id)
     .then(function (r) {

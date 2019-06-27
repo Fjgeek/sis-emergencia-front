@@ -8,7 +8,8 @@ import ScrollTop from '../../common/scrolltop';
 import NurseList from './nurse-list';
 import NurseNew from './nurse-new';
 import NurseDetail from './nurse-detail';
-
+import NurseDown from './nurse-down';
+import NurseUp from './nurse-up';
 
 class Nurse extends Component {
   render() {
@@ -26,6 +27,15 @@ class Nurse extends Component {
                 exact
                 path={`${match.url}/nuevo`}
                 component={ NurseNew }
+              />
+              <Route 
+                exact
+                path={`${match.url}/bajas`}
+                component={ NurseDown }
+              />
+              <Route
+                path={`${match.url}/bajas/:id`}
+                component={ NurseUp }
               />
               <Route
                 path={`${match.url}/:id`}

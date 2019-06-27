@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import '../@style/container.css';
 import '../@style/form.css';
 /* Components */
-import TextField, {HelperText, Input, Icon} from '@material/react-text-field';
-import Button from '@material/react-button';
+import TextField, {HelperText, Input} from '@material/react-text-field';
 import MaterialIcon from '@material/react-material-icon';
 import Remove from '../../common/remove';
+import NurseRead from './nurse-read';
 
 const NurseForm = (props)=>{
   return (
@@ -96,48 +96,13 @@ const NurseForm = (props)=>{
 
           />
           :
-          <fieldset className="graduate-form--fieldset">
-            <legend>
-              Tarjeta RFID
-            </legend>
-
-            <aside className="graduate-form--control">
-            
-              <TextField
-                label='Código RFID'
-                helperText={<HelperText persistent={true}>
-                  {
-                    props.readInfo.load ?
-                    `Esperando lectura ${props.readInfo.seconds}`
-                    :
-                    '(*)Presione LEER RFID y coloque su tarjeta en el lector'
-                  }
-                </HelperText>}
-                onTrailingIconSelect={() => props.changeState({rfid: ''})}
-                trailingIcon={<MaterialIcon role="button" icon="close "/>}
-                className='graduate-form--input'
-              ><Input
-                required
-                id="rfid"
-                value={props.rfid}
-                onChange={(e) => props.changeState({rfid: e.currentTarget.value})} />
-              </TextField>
-              <Button
-                raised
-                onClick = { props.startRead }
-                type="button"
-                icon={<MaterialIcon icon="credit_card"></MaterialIcon>}
-                className='graduate-form--input'
-                style={{
-                  backgroundColor: '#242f24',
-                  marginTop: 15
-                }}
-              >
-                LEER RFID
-              </Button>
-            </aside>
-
-          </fieldset>
+          <NurseRead
+            rfid = { props.rfid }
+            { ...props.readInfo }
+            changeState = { props.changeState }
+            startRead = { props.startRead }
+            cancelRead = { props.cancelRead }
+          />
         }
 
       </div>
