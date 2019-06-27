@@ -3,22 +3,22 @@ import React, { Component } from 'react';
 /* Components */
 import { Redirect } from 'react-router-dom';
 import Header from '../../common/header';
-import PersonForm from './nurse-form';
+import NurseForm from './nurse-form';
 import Action from '../../common/action';
 import Loading from '../../common/loading';
 
 /* Interface */
-import { PersonSchema } from './nurse-schema';
+import { NurseSchema } from './nurse-schema';
 
 /* Data */
-import PersonHttp from '../@data/nurse-http';
+import NurseHttp from '../@data/nurse-http';
 import { getUrl } from '../@data/get-url';
 
-class PersonNew extends Component {
+class NurseNew extends Component {
   constructor(props){
     super();
     this.state = {
-      data: Object.assign({},PersonSchema),
+      data: Object.assign({},NurseSchema),
       load: false,
       completed: false,
       urlCompleted: '/'
@@ -30,15 +30,14 @@ class PersonNew extends Component {
       load: true
     });
     let self = this;
-    PersonHttp.add(this.state.data,
-      (data)=>{
-        self.completeSend(data.result);
-      },
-      (error)=>{
-        self.completeError(error.result);
-      });
-    
-    /*this.props.history.goBack();*/
+    console.log(this.state.data);
+    // NurseHttp.add(this.state.data,
+    //   (data)=>{
+    //     self.completeSend(data.result);
+    //   },
+    //   (error)=>{
+    //     self.completeError(error.result);
+    //   });
   }
   completeSend = (result)=>{
     //console.log(result);
@@ -69,11 +68,11 @@ class PersonNew extends Component {
     return (
       <div>
         <Header
-          title = "Añadir Persona"
+          title = "Añadir Enfermera"
           match = { this.props.match }
           history = { this.props.history }
           theme = {{
-            background: "#3700B3",
+            background: "#116d11",
             color:"#fff"
 
           }}
@@ -83,7 +82,7 @@ class PersonNew extends Component {
           <Loading title="Guardando Datos..." />
           :
           <form onSubmit={ this.handleSend }>
-            <PersonForm
+            <NurseForm
               changeState = { this.changeState }
               { ...this.state.data }
             />
@@ -103,4 +102,4 @@ class PersonNew extends Component {
   }
 }
 
-export default PersonNew;
+export default NurseNew;

@@ -7,7 +7,7 @@ import PersonForm from './nurse-form';
 import Action from '../../common/action';
 
 /* Interface */
-import { PersonSchema } from './nurse-schema';
+import { NurseSchema } from './nurse-schema';
 
 /* Data */
 import PersonHttp from '../@data/nurse-http';
@@ -17,7 +17,7 @@ class PersonDetail extends Component {
   constructor(props){
     super();
     this.state = {
-      data: Object.assign({},PersonSchema),
+      data: Object.assign({},NurseSchema),
       changePass: false,
       load: true,
       loadText: 'Cargando Información',

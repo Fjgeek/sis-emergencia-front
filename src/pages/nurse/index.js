@@ -6,11 +6,11 @@ import {
 /* components */
 import ScrollTop from '../../common/scrolltop';
 import NurseList from './nurse-list';
-import PersonNew from './nurse-new';
-import PersonDetail from './nurse-detail';
+import NurseNew from './nurse-new';
+import NurseDetail from './nurse-detail';
 
 
-class Person extends Component {
+class Nurse extends Component {
   render() {
     const { match } = this.props;
     return (
@@ -22,15 +22,15 @@ class Person extends Component {
                 path={match.url}
                 component={ NurseList }
               />
-              {/* <Route 
+              <Route 
                 exact
                 path={`${match.url}/nuevo`}
-                component={ PersonNew }
+                component={ NurseNew }
               />
               <Route
                 path={`${match.url}/:id`}
-                component ={ PersonDetail }
-              /> */}
+                component ={ NurseDetail }
+              />
             </Switch>
         </ScrollTop>
       </div>
@@ -38,4 +38,4 @@ class Person extends Component {
   }
 }
 
-export default Person;
+export default Nurse;

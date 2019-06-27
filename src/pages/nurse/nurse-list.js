@@ -60,7 +60,7 @@ class PersonList extends Component {
               }
           ]}
           theme = {{
-            background: "#3F51B5",
+            background: "#008000",
             color: "#fff"
           }}
         />
@@ -127,7 +127,7 @@ class PersonList extends Component {
               ]
             }
           ]}
-          defaultPageSize={20}
+          defaultPageSize={15}
           className="-striped -highlight"
         />
       </section>

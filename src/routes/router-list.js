@@ -30,8 +30,8 @@ const RouterList = (props)=>{
   return(
     <Switch>
       <Route exact path="/" component={ Home }/>
-      <Route exact path="/salas" component={ RoomBed }/>
-      <Route exact path="/enfermeras" component={ Nurse }/>
+      <Route path="/salas" component={ RoomBed }/>
+      <Route path="/enfermeras" component={ Nurse }/>
       <Route component={NoMatch} />
     </Switch>        
   )

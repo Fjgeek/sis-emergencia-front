@@ -34,7 +34,7 @@ class TopNav extends Component {
         <TopAppBar
           fixed
           style={{
-            backgroundColor: '#3f51b5'
+            backgroundColor: '#008000'
           }}
         >
           <TopAppBarRow>

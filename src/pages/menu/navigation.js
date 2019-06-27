@@ -21,7 +21,7 @@ const Navigation = (props) => {
         </aside>
         <ul className="Nav-menu-list">
           <li>
-            <NavLink to="/" activeClassName="active-menu" onClick={ MenuEvent }>
+            <NavLink to="/" exact={true} activeClassName="active-menu" onClick={ MenuEvent }>
               Emergencias
             </NavLink>
           </li>

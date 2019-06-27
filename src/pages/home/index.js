@@ -16,9 +16,9 @@ class Home extends Component {
     let self = this;
     RoomBedHttp.getAll(
       (data)=>{
-        console.log(data);
+        console.log(data.result);
         self.setState({
-          rooms: data
+          rooms: data.result
         })
       },
       (error)=>{

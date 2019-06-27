@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import '../@style/container.css';
 import '../@style/form.css';
 /* Components */
-import TextField, {HelperText, Input} from '@material/react-text-field';
+import TextField, {HelperText, Input, Icon} from '@material/react-text-field';
+import Button from '@material/react-button';
 import MaterialIcon from '@material/react-material-icon';
-import Switch from '@material/react-switch';
 import Remove from '../../common/remove';
 
-const PersonForm = (props)=>{
+const NurseForm = (props)=>{
   return (
     <div className="graduate-container">
       <div className="graduate-form">
@@ -22,7 +22,7 @@ const PersonForm = (props)=>{
               label='Nombre'
               helperText={<HelperText>Help Me!</HelperText>}
               onTrailingIconSelect={ () => props.changeState({first_name: ''})}
-              trailingIcon={<MaterialIcon role="button" icon="close "/>}
+              trailingIcon={<MaterialIcon role="button" icon="close"/>}
               className='graduate-form--input'
             ><Input
               required
@@ -86,153 +86,38 @@ const PersonForm = (props)=>{
             </TextField>
           </aside>
 
-          <aside className="graduate-form--control">
-            <TextField
-              label='Número de Telefono'
-              helperText={<HelperText>Help Me!</HelperText>}
-              onTrailingIconSelect={() => props.changeState({telephone: ''})}
-              trailingIcon={<MaterialIcon role="button" icon="close "/>}
-              className='graduate-form--input'
-            ><Input
-              required
-              id="telephone"
-              value={props.telephone}
-              onChange={(e) => props.changeState({telephone: e.currentTarget.value})} />
-            </TextField>
-          </aside>
-
-          <div className="graduate-separate"/>
-
-          <aside className="graduate-form--control">
-            <TextField
-              label='Correo Electrónico'
-              helperText={<HelperText>Help Me!</HelperText>}
-              onTrailingIconSelect={() => props.changeState({email: ''})}
-              trailingIcon={<MaterialIcon role="button" icon="close "/>}
-              className='graduate-form--input'
-            ><Input
-              required
-              id="email"
-              value={props.email}
-              type="email"
-              onChange={(e) => props.changeState({email: e.currentTarget.value})} />
-            </TextField>
-          </aside>
-
-
         </fieldset>
 
         <fieldset className="graduate-form--fieldset">
           <legend>
-            Residencia
+            Tarjeta RFID
           </legend>
 
           <aside className="graduate-form--control">
           
             <TextField
-              label='Ciudad'
+              label='Código RFID'
               helperText={<HelperText>Help Me!</HelperText>}
-              onTrailingIconSelect={() => props.changeState({city: ''})}
+              onTrailingIconSelect={() => props.changeState({rfid: ''})}
               trailingIcon={<MaterialIcon role="button" icon="close "/>}
               className='graduate-form--input'
             ><Input
               required
-              id="city"
-              value={props.city}
-              onChange={(e) => props.changeState({city: e.currentTarget.value})} />
+              id="rfid"
+              value={props.rfid}
+              onChange={(e) => props.changeState({rfid: e.currentTarget.value})} />
             </TextField>
-          </aside>
-
-          <div className="graduate-separate"/>
-
-          <aside className="graduate-form--control">
-            
-            <TextField
-              label='Dirección'
-              helperText={<HelperText>Help Me!</HelperText>}
-              onTrailingIconSelect={() => props.changeState({address: ''})}
-              trailingIcon={<MaterialIcon role="button" icon="close "/>}
+            <Button
+              raised
+              icon={<MaterialIcon icon="credit_card"></MaterialIcon>}
               className='graduate-form--input'
-            ><Input
-              required
-              id="address"
-              value={props.address}
-              onChange={(e) => props.changeState({address: e.currentTarget.value})} />
-            </TextField>
+              style={{
+                backgroundColor: '#242f24'
+              }}
+            >
+              Leer Código
+            </Button>
           </aside>
-
-        </fieldset>
-
-        <fieldset className="graduate-form--fieldset">
-          <legend>Seguridad</legend>
-          {
-            props.editForm ?
-            <div>
-              <div className="graduate-form--switch">
-                <Switch
-                  nativeControlId='changePass'
-                  checked={props.changePass}
-                  onChange={(e) => props.togglePass({changePass: e.target.checked})} />
-                <label htmlFor='changePass'>Cambiar Contraseña</label>
-              </div>
-              {
-                props.changePass ?
-                <div>
-                  <h6 className="graduate-form--helper">(*) Por favor Ingrese Actual contraseña y despues la nueva.</h6>
-                  <aside className="graduate-form--control">  
-                    <TextField
-                      label='Contraseña Actual'
-                      helperText={<HelperText>Help Me!</HelperText>}
-                      onTrailingIconSelect={() => props.changeState({passNow: ''})}
-                      trailingIcon={<MaterialIcon role="button" icon="close "/>}
-                      className='graduate-form--input'
-                    ><Input
-                      required
-                      id="passNow"
-                      type = 'password'
-                      value={props.passNow}
-                      onChange={(e) => props.changeState({passNow: e.currentTarget.value})} />
-                    </TextField>
-                  </aside>
-                  <aside className="graduate-form--control">  
-                    <TextField
-                      label='Contraseña Nueva'
-                      helperText={<HelperText>Help Me!</HelperText>}
-                      onTrailingIconSelect={() => props.changeState({passNew: ''})}
-                      trailingIcon={<MaterialIcon role="button" icon="close "/>}
-                      className='graduate-form--input'
-                    ><Input
-                      required
-                      id="passNew"
-                      type = 'password'
-                      value={props.passNew}
-                      onChange={(e) => props.changeState({passNew: e.currentTarget.value})} />
-                    </TextField>
-                  </aside>
-                </div>
-                :
-                <div>
-                  <h6 className="graduate-form--helper">Su contraseña, solo se moficara con permiso del usuario.</h6>
-                </div>
-              }
-            </div>
-            :
-            <aside className="graduate-form--control">  
-              <TextField
-                label='Password'
-                helperText={<HelperText>Help Me!</HelperText>}
-                onTrailingIconSelect={() => props.changeState({pass: ''})}
-                trailingIcon={<MaterialIcon role="button" icon="close "/>}
-                className='graduate-form--input'
-              ><Input
-                required
-                id="pass"
-                type = 'password'
-                value={props.pass}
-                onChange={(e) => props.changeState({pass: e.currentTarget.value})} />
-              </TextField>
-            </aside>
-          }
 
         </fieldset>
 
@@ -248,34 +133,23 @@ const PersonForm = (props)=>{
   )
 }
 
-PersonForm.propTypes = {
+NurseForm.propTypes = {
   first_name: PropTypes.string,
   last_name: PropTypes.string,
   ci: PropTypes.string,
-  email: PropTypes.string,
   cellphone: PropTypes.string,
-  telephone: PropTypes.string,
-  city: PropTypes.string,
-  address: PropTypes.string,
-  password: PropTypes.string,
-  newForm: PropTypes.bool,
+  rfid: PropTypes.string,
+  editForm: PropTypes.bool,
   passChange: PropTypes.bool,
-  togglePass: PropTypes.func
 }
 
-PersonForm.defaultProps = {
+NurseForm.defaultProps = {
   first_name: '',
   last_name: '',
   ci: '',
-  email: '',
   cellphone: '',
-  telephone: '',
-  city: '',
-  address: '',
-  password: '',
-  editForm: false,
-  passChange: false,
-  togglePass: ()=>{}
+  rfid: '',
+  editForm: false
 }
 
-export default PersonForm;
+export default NurseForm;

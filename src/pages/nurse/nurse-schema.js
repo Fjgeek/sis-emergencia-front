@@ -1,15 +1,8 @@
-export const PersonSchema = {
+export const NurseSchema = {
   id: null,
-  name: '',
+  rfid:'',
   first_name:'',
   last_name:'',
   ci:'',
-  email:'',
-  cellphone:'',
-  telephone:'',
-  city:'',
-  address:'',
-  pass:'',
-  passNow:'',
-  passNew:''
+  cellphone:''
 }

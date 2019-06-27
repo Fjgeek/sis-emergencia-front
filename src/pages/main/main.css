@@ -2,7 +2,7 @@
   position: fixed;
   width: 250px;
   height: 100vh;
-  background: #dddddd;
+  background: #fff;
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
   z-index: 2;
 }

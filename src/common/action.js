@@ -16,13 +16,21 @@ const Action = (props)=>{
   return (
     <div className="graduate-form--action">
       <NavLink to={ urlCompleted.path }>
-        <Button type="button">
+        <Button
+          type="button"
+          style={{
+            color: '#000'
+          }}
+        >
           Cancelar
         </Button>
       </NavLink>      
       <Button
         type = 'submit'
         raised
+        style={{
+          backgroundColor: '#059805'
+        }}
       >
         Guardar
       </Button>
