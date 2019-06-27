@@ -1,6 +1,6 @@
 .Main-menu{
   position: fixed;
-  width: 250px;
+  width: 220px;
   height: 100vh;
   background: #fff;
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
@@ -8,5 +8,5 @@
 }
 .Main-container{
   width: 100%;
-  padding: 64px 0px 0px 250px;
+  padding: 64px 0px 0px 220px;
 }

@@ -12,6 +12,7 @@ import { NurseSchema } from './nurse-schema';
 
 /* Data */
 import NurseHttp from '../@data/nurse-http';
+import ReadHttp from '../@data/read-http';
 import { getUrl } from '../@data/get-url';
 
 class NurseNew extends Component {
@@ -21,7 +22,13 @@ class NurseNew extends Component {
       data: Object.assign({},NurseSchema),
       load: false,
       completed: false,
-      urlCompleted: '/'
+      urlCompleted: '/',
+      readInfo:{
+        message: '',
+        seconds: 10,
+        enabled: false,
+        load: false
+      }
     }
   }
   handleSend = (e)=>{
@@ -64,6 +71,71 @@ class NurseNew extends Component {
       urlCompleted: url.path
     });
   }
+  componentWillUnmount(){
+    this.cancelRead();
+  }
+  startRead = ()=>{
+    let self = this;
+    this.interval = setInterval(()=> this.startCount(),700);
+    ReadHttp.activeRead();
+    ReadHttp.readCode(0,(data)=>{
+      self.cancelCount();
+      if(data.status){
+        let dataNew = self.state.data;
+        let readInfo = self.state.readInfo;
+        readInfo.load = false;
+        if(data.result.enabled){
+          // disponible
+          dataNew.rfid = data.result.rfid;
+          self.setState({
+            data: dataNew,
+            readInfo
+          });
+        }else{
+          // ya en uso
+          readInfo.message = `ERROR: RFID ya esta en USO por ${data.result.user.first_name} ${data.result.user.last_name}`;
+          self.setState({
+            data: dataNew,
+            readInfo
+          });
+        }
+      }
+    },(error)=>{
+      self.completeError(error.result);
+    })
+  }
+  cancelRead = ()=>{
+    this.cancelCount();
+    ReadHttp.cancelRead();
+  }
+  startCount = ()=>{
+    if(this.state.readInfo.seconds == 0){
+      this.cancelCount();
+    }else{
+      let readInfo = this.state.readInfo;
+      if(this.state.readInfo.seconds == 10){
+        readInfo.load = true;
+      }
+      readInfo.seconds =  readInfo.seconds - 1;
+      this.setState({
+        readInfo
+      },()=>{
+        console.log(this.state.readInfo.seconds)
+      });
+    }
+  }
+  cancelCount = ()=>{
+    clearInterval(this.interval);
+    let readInfo = this.state.readInfo;
+    readInfo.seconds = 10;
+    readInfo.enabled = false;
+    readInfo.load = false;
+    readInfo.message = '';
+    this.setState({
+      readInfo
+    });
+  }
+
   render() {
     return (
       <div>
@@ -77,6 +149,8 @@ class NurseNew extends Component {
 
           }}
         />
+        <button onClick={this.startRead}>Leer Codigo</button>
+        <button onClick={this.cancelRead}>Cancelar</button>
         {
           this.state.load ?
           <Loading title="Guardando Datos..." />
@@ -85,6 +159,9 @@ class NurseNew extends Component {
             <NurseForm
               changeState = { this.changeState }
               { ...this.state.data }
+              readInfo = { this.state.readInfo }
+              startRead = { this.startRead }
+              cancelRead = { this.cancelRead }
             />
             <Action
               match = { this.props.match }

@@ -11,10 +11,10 @@ const Remove = (props)=>(
           <legend>
             Zona de Peligro
           </legend>
-          <h6 className="graduate-form--helper">(*) Si usted esta seguro de Eliminar, es bajo su responsabilidad.</h6>
+          <h6 className="graduate-form--helper">{ props.text }</h6>
           <br/>
-          <Button>
-            Eliminar
+          <Button type="button">
+            { props.label }
           </Button>
     </fieldset>
   </div>

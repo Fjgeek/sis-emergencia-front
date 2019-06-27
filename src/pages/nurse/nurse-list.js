@@ -19,7 +19,7 @@ class PersonList extends Component {
   showDetail = (e, handleOriginal, rowInfo)=>{
     if(typeof(rowInfo)!=="undefined"){
       if( rowInfo.original.id_nurse !== null){
-        this.props.history.push(''+this.props.match.url+'/'+rowInfo.original.person_id);
+        this.props.history.push(''+this.props.match.url+'/'+rowInfo.original.id_nurse);
       }else{
         console.error('Existe un error en ShowDetail el objeto no existe');
       }

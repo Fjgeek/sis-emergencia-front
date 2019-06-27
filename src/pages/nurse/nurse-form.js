@@ -88,44 +88,56 @@ const NurseForm = (props)=>{
 
         </fieldset>
 
-        <fieldset className="graduate-form--fieldset">
-          <legend>
-            Tarjeta RFID
-          </legend>
-
-          <aside className="graduate-form--control">
-          
-            <TextField
-              label='Código RFID'
-              helperText={<HelperText>Help Me!</HelperText>}
-              onTrailingIconSelect={() => props.changeState({rfid: ''})}
-              trailingIcon={<MaterialIcon role="button" icon="close "/>}
-              className='graduate-form--input'
-            ><Input
-              required
-              id="rfid"
-              value={props.rfid}
-              onChange={(e) => props.changeState({rfid: e.currentTarget.value})} />
-            </TextField>
-            <Button
-              raised
-              icon={<MaterialIcon icon="credit_card"></MaterialIcon>}
-              className='graduate-form--input'
-              style={{
-                backgroundColor: '#242f24'
-              }}
-            >
-              Leer Código
-            </Button>
-          </aside>
-
-        </fieldset>
-
         {
           props.editForm?
-          <Remove />
+          <Remove
+            text="(*) Si usted esta seguro que quiere deshabilitar al usuario, es bajo su responsabilidad."
+            label="DESHABILITAR"
+
+          />
           :
-          <span/>
+          <fieldset className="graduate-form--fieldset">
+            <legend>
+              Tarjeta RFID
+            </legend>
+
+            <aside className="graduate-form--control">
+            
+              <TextField
+                label='Código RFID'
+                helperText={<HelperText persistent={true}>
+                  {
+                    props.readInfo.load ?
+                    `Esperando lectura ${props.readInfo.seconds}`
+                    :
+                    '(*)Presione LEER RFID y coloque su tarjeta en el lector'
+                  }
+                </HelperText>}
+                onTrailingIconSelect={() => props.changeState({rfid: ''})}
+                trailingIcon={<MaterialIcon role="button" icon="close "/>}
+                className='graduate-form--input'
+              ><Input
+                required
+                id="rfid"
+                value={props.rfid}
+                onChange={(e) => props.changeState({rfid: e.currentTarget.value})} />
+              </TextField>
+              <Button
+                raised
+                onClick = { props.startRead }
+                type="button"
+                icon={<MaterialIcon icon="credit_card"></MaterialIcon>}
+                className='graduate-form--input'
+                style={{
+                  backgroundColor: '#242f24',
+                  marginTop: 15
+                }}
+              >
+                LEER RFID
+              </Button>
+            </aside>
+
+          </fieldset>
         }
 
       </div>

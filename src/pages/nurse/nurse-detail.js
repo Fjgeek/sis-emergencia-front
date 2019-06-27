@@ -108,10 +108,10 @@ class PersonDetail extends Component {
     return (
       <div>
         <Header
-          title = "Detalle Persona"
+          title = "Detalle Enfermera"
           match = { this.props.match }
           theme = {{
-            background: "#7c20ff",
+            background: "#008000",
             color:"#fff"
 
           }}
