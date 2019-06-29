@@ -30,7 +30,7 @@ const NurseHttp = {
     })
   },
   add: (data,response, error)=>{
-    axios.post(BASE+'nurse/new',data)
+    axios.post(BASE+'nurse/add',data)
     .then(function (r) {
       response(r.data);
     })
@@ -47,8 +47,20 @@ const NurseHttp = {
       error(e);
     })
   },
-  delete: (id, response, error)=>{
-    axios.post(BASE+'nurse/delete',{person_id:id})
+  disabled: (id, response, error)=>{
+    axios.post(BASE+'nurse/disabled',{id_nurse:id})
+    .then(function(r){
+      response(r.data);
+    })
+    .catch(function(e){
+      error(e);
+    })
+  },
+  enabled: (id, rfid, response, error)=>{
+    axios.post(BASE+'nurse/enabled',{
+      id_nurse:id,
+      rfid
+    })
     .then(function(r){
       response(r.data);
     })

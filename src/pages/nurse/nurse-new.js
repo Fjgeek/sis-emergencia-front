@@ -6,7 +6,7 @@ import Header from '../../common/header';
 import NurseForm from './nurse-form';
 import Action from '../../common/action';
 import Loading from '../../common/loading';
-
+import Alert from '../../common/alert';
 /* Interface */
 import { NurseSchema } from './nurse-schema';
 
@@ -23,6 +23,11 @@ class NurseNew extends Component {
       load: false,
       completed: false,
       urlCompleted: '/',
+      alert: {
+        visible: false,
+        message: 'default',
+        theme: 'default'
+      },
       readInfo:{
         message: '',
         linkRef: '',
@@ -38,24 +43,44 @@ class NurseNew extends Component {
       load: true
     });
     let self = this;
-    console.log(this.state.data);
-    // NurseHttp.add(this.state.data,
-    //   (data)=>{
-    //     self.completeSend(data.result);
-    //   },
-    //   (error)=>{
-    //     self.completeError(error.result);
-    //   });
+    //console.log(this.state.data);
+    NurseHttp.add(this.state.data,
+      (data)=>{
+        if(data.status){
+          self.completeSend(data.result);
+        }else{
+          self.completeError(data.message);
+        }
+      },
+      (error)=>{
+        self.completeError(error);
+      });
   }
-  completeSend = (result)=>{
-    //console.log(result);
+  completeSend = ()=>{
     this.setState({
       completed: true
     })
   }
-  completeError = ()=>{
+  completeError = (message)=>{
     this.setState({
       load: false
+    });
+    this.showAlert(message,'error');
+  }
+  showAlert = (message, theme)=>{
+    this.setState({
+      alert:{
+        visible: true,
+        message,
+        theme
+      }
+    });
+  }
+  hideAlert = ()=>{
+    this.setState({
+      alert: false,
+      message: '',
+      theme: 'default'
     })
   }
   changeState = (keyObject)=>{
@@ -139,7 +164,6 @@ class NurseNew extends Component {
       readInfo
     });
   }
-
   render() {
     return (
       <div>
@@ -170,6 +194,18 @@ class NurseNew extends Component {
             />
           </form>
         }
+
+        {
+          this.state.alert.visible ?
+          <Alert
+            message={ this.state.alert.message }
+            theme={ this.state.alert.theme }
+            hideAlert = { this.hideAlert }
+          />
+          :
+          <span/>
+        }
+
         {
           this.state.completed?
           <Redirect to={ this.state.urlCompleted } />

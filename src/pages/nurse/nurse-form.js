@@ -93,6 +93,7 @@ const NurseForm = (props)=>{
           <Remove
             text="(*) Si usted esta seguro que quiere deshabilitar al usuario, es bajo su responsabilidad."
             label="DESHABILITAR"
+            handleEvent = { props.disabledAccount }
 
           />
           :
@@ -117,7 +118,8 @@ NurseForm.propTypes = {
   cellphone: PropTypes.string,
   rfid: PropTypes.string,
   editForm: PropTypes.bool,
-  passChange: PropTypes.bool,
+  changeState: PropTypes.func,
+  disabledAccount: PropTypes.func
 }
 
 NurseForm.defaultProps = {
@@ -126,7 +128,9 @@ NurseForm.defaultProps = {
   ci: '',
   cellphone: '',
   rfid: '',
-  editForm: false
+  editForm: false,
+  changeState: ()=>{},
+  disabledAccount: ()=>{}
 }
 
 export default NurseForm;
