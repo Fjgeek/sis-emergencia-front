@@ -1,3 +1,6 @@
+.table-main{
+  cursor: pointer;
+}
 .table-created{
   background-color: #f3fff3;
 }

@@ -64,26 +64,10 @@ class PersonDetail extends Component {
   }
   handleSend = (e)=>{
     e.preventDefault();
-    let data = this.state.data;
-    this.setState({
-      load: true,
-      loadText: 'Guardando'
-    });
-    if(this.state.changePass){
-      if(data.passwords === data.passNow ){
-        data.pass = data.passNew;
-        this.sendUpdate(data);
-      }else{
-        alert('Contraseña anterior no coincide, acceso Denegado');
-      }
-    }else{
-      data.pass = data.passwords;
-      this.sendUpdate(data);
-    }
-  }
-  sendUpdate = (data)=>{
     let self = this;
-    NurseHttp.update(data,
+    let id = this.state.data.id_nurse;
+    let rfid = this.state.data.rfid;
+    NurseHttp.enabled(id,rfid,
       (data)=>{
         self.completeSend(data);
       },
