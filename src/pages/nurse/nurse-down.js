@@ -118,7 +118,7 @@ class NurseDown extends Component {
               ]
             }
           ]}
-          defaultPageSize={15}
+          defaultPageSize={5}
           className="-striped -highlight table-main"
         />
       </section>

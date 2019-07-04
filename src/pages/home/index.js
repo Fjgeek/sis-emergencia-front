@@ -1,35 +1,81 @@
 import React, { Component } from 'react';
+import './home.css';
 
 /* Components*/
 import HomeHeader from './home-header';
-
+import Turn from './turn';
 /* Data */
-import RoomBedHttp from '../@data/roombed-http';
+import EmergencyHttp from '../@data/emergency-http';
+
 class Home extends Component {
   constructor(props){
     super();
     this.state = {
-      rooms: []
+      data: [],
+      fullscreen: false,
+      request: true
     }
   }
   componentDidMount(){
     let self = this;
-    RoomBedHttp.getAll(
-      (data)=>{
-        console.log(data.result);
-        self.setState({
-          rooms: data.result
+    EmergencyHttp.activeRead();
+    this.initRealTime();
+    this.interval = setInterval(()=> this.initRealTime(),2000);
+  }
+  componentWillUnmount(){
+    clearInterval(this.interval);
+    EmergencyHttp.cancelRead();
+    this.setState({
+      request: false
+    });
+  }
+  initRealTime = ()=>{
+    let self = this;
+    if(this.state.request){
+      EmergencyHttp.emergencyNow(
+        (data)=>{
+          self.updateData(data.result);
+        },
+        (error)=>{
+          console.log(error);
+        });
+    }
+  }
+  updateData = (data)=>{
+    this.setState({
+      data
+    })
+  }
+
+  showFull = ()=>{
+    if (document.fullscreenEnabled) {
+      if(this.state.fullscreen){
+        if(window.document.fullscreenElement != null){
+          window.document.exitFullscreen();
+        }
+        this.setState({
+          fullscreen: false
         })
-      },
-      (error)=>{
-        console.log(error);
-      }
-    )
+      }else{
+        window.document.body.requestFullscreen();
+        this.setState({
+          fullscreen: true
+        })
+      }      
+    }else{
+      alert('su dispositivo no soporta pantalla completa')
+    }
   }
   render() {
     return (
-      <div>
+      <div className={ `home-container ${this.state.fullscreen?'home-full-screen':''}` }>
         <HomeHeader />
+        <Turn 
+          showFull = { this.showFull }
+          fullscreen = { this.state.fullscreen }
+          data = { this.state.data }
+        />
+        {/* <HomeHeader />
         {
           this.state.rooms.map( (room)=>(
             <div key={ `room-${ room.id_room }` }>
@@ -46,7 +92,7 @@ class Home extends Component {
               }
             </div>
           ))
-        }
+        } */}
 
       </div>
     )

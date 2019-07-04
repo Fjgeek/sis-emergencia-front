@@ -14,11 +14,6 @@ const Home = Loadable({
   loading: Loading
 });
 
-const RoomBed = Loadable({
-  loader: ()=> import('../pages/roombed'),
-  loading: Loading
-});
-
 const Nurse = Loadable({
   loader: ()=> import('../pages/nurse'),
   loading: Loading
@@ -30,7 +25,6 @@ const RouterList = (props)=>{
   return(
     <Switch>
       <Route exact path="/" component={ Home }/>
-      <Route path="/salas" component={ RoomBed }/>
       <Route path="/enfermeras" component={ Nurse }/>
       <Route component={NoMatch} />
     </Switch>        

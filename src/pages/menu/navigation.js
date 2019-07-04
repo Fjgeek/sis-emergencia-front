@@ -26,13 +26,13 @@ const Navigation = (props) => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/salas" activeClassName="active-menu" onClick={ MenuEvent }>
-              Salas
+            <NavLink to="/enfermeras" activeClassName="active-menu" onClick={ MenuEvent }>
+              Enfermeras
             </NavLink>
           </li>
           <li>
-            <NavLink to="/enfermeras" activeClassName="active-menu" onClick={ MenuEvent }>
-              Enfermeras
+            <NavLink to="/historial" activeClassName="active-menu" onClick={ MenuEvent }>
+              Historial
             </NavLink>
           </li>
           

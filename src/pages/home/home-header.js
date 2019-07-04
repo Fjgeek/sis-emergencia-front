@@ -3,19 +3,16 @@ import './home-header.css';
 
 const HomeHeader = (props)=>{
   return(
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col-10">
-          <div className="jumbotron text-center">
-            <h1>Llamados de Emergencia</h1> 
-            <p>Las camas de color rojo necesitan atención INMEDIATA.</p> 
-          </div>
-        </div>
-        <div className="col-2">
-          <img src="/assets/images/CNS.png" className="img-responsive float-right jumbo-image" alt="Chania"/>
-        </div>
-      </div>
-    </div>
+    <header className="header-container">
+      <figure className="header-image">
+        <img src="/assets/images/cns-light.png" className="" alt="Caja Nacional de Salud - Logo"/>
+      </figure>
+      
+      <h1 className="header-title">
+        Emergencias
+        <small>Atención inmediata</small>
+      </h1>
+    </header>
   )
 }
 

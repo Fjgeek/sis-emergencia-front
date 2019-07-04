@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material/card": "^3.0.0",
     "@material/react-button": "^0.11.0",
+    "@material/react-card": "^0.14.1",
     "@material/react-list": "^0.11.0",
     "@material/react-material-icon": "^0.11.0",
     "@material/react-switch": "^0.12.0",
@@ -16,7 +16,6 @@
     "@types/react": "^16.8.10",
     "@types/react-dom": "^16.8.3",
     "axios": "^0.18.0",
-    "bootstrap": "^4.3.1",
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
