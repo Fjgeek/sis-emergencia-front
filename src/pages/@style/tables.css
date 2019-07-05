@@ -10,3 +10,8 @@
 .table-disabled{
   background-color: #fff6f3;
 }
+.table-id{
+  width: 10px!important;
+  background-color: #008001;
+  color: #fff!important;
+}
