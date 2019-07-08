@@ -1,31 +1,26 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './login.css';
 
 /* Components */
 import Button from '@material/react-button';
 import TextField, {HelperText, Input} from '@material/react-text-field';
 import MaterialIcon from '@material/react-material-icon';
+import Alert from '../../common/alert';
 
-class Login extends Component {
-  constructor(props){
-    super();
-    this.state = {
-      user: '',
-      password: ''
-    };
-  }
-
-  render(){
+const Login = (props)=>{
     let {
-      signIn
-    } = this.props;
+      signIn,
+      changeState,
+      hideAlert,
+      data
+    } = props;
     return(
       <div className="login-container">
         <form className="login-form" onSubmit={ signIn }>
           <div className="login-form-title">
             <h3>
-              Programa de Graduación
-              <small>de Antiguos Egresados</small>
+              Sistema de Emergencias
+              <small>Caja Nacional de Salud</small>
             </h3>
           </div>
           <div className="login-form-logo">
@@ -34,33 +29,44 @@ class Login extends Component {
           <TextField
             label='Usuario'
             helperText={<HelperText>Help Me!</HelperText>}
-            onTrailingIconSelect={() => this.setState({user: ''})}
+            onTrailingIconSelect={() => changeState({user: ''})}
             trailingIcon={<MaterialIcon role="button" icon="close "/>}
           ><Input
             id="user"
-            value={this.state.user}
-            onChange={(e) => this.setState({user: e.currentTarget.value})} />
+            value={data.user}
+            onChange={(e) => changeState({user: e.currentTarget.value})} />
           </TextField>
 
           <TextField
             label='Contraseña'
             helperText={<HelperText>Help Me!</HelperText>}
-            onTrailingIconSelect={() => this.setState({password: ''})}
+            onTrailingIconSelect={() => changeState({password: ''})}
             trailingIcon={<MaterialIcon role="button" icon="close"/>}
           ><Input
             id="password"
             type = 'password'
-            value={this.state.password}
-            onChange={(e) => this.setState({password: e.currentTarget.value})} />
+            value={data.password}
+            onChange={(e) => changeState({password: e.currentTarget.value})} />
           </TextField>
           <Button
             raised
+            className="login-form-btn"
           >
             Ingresar
           </Button>
         </form>
+        {
+          data.alert.visible ?
+          <Alert
+            max
+            message={ data.alert.message }
+            theme={ data.alert.theme }
+            hideAlert = { hideAlert }
+          />
+          :
+          <span/>
+        }
       </div>
     )
-  }
 }
 export default Login;

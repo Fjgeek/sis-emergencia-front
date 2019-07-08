@@ -6,7 +6,7 @@ import MaterialIcon from '@material/react-material-icon';
 
 const Alert = (props) => {
   return (
-    <div className="alert-container">
+    <div className={ props.max ? "alert-container alert-max":"alert-container"}>
       <div className={`alert-form alert-${props.theme} animated pulse`}>
         { props.message }
         <span className="alert-close" onClick={ props.hideAlert }>
@@ -18,11 +18,13 @@ const Alert = (props) => {
 }
 
 Alert.propTypes = {
+  max: PropTypes.bool,
   message: PropTypes.string,
   theme: PropTypes.string,
   hideAlert: PropTypes.func
 }
 Alert.defaultProps = {
+  max: false, 
   message: 'default',
   theme: '',
   hideAlert: ()=>{}

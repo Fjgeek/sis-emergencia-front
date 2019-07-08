@@ -4,6 +4,7 @@
   left: 0;
   bottom: 60px;
   padding-left: 220px;
+  z-index: 2;
 }
 .alert-form{
   position: relative;
@@ -11,6 +12,10 @@
   border-radius: 5px;
   width: 350px;
   margin: 0 auto;
+}
+/* position */
+.alert-max{
+  padding-left: 0px;
 }
 /* themes */
 .alert-default{

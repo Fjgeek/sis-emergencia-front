@@ -11,7 +11,7 @@
   background-color: #fff6f3;
 }
 .table-id{
-  width: 10px!important;
-  background-color: #008001;
-  color: #fff!important;
+  background-color: rgba(153, 153, 153, 0.4117647058823529);
+  color: #253f25!important;
+  font-weight: bold;
 }
