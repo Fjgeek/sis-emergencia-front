@@ -18,19 +18,18 @@ import { NurseSchema } from './nurse-schema';
 import NurseHttp from '../@data/nurse-http';
 import ReadHttp from '../@data/read-http';
 import { getUrl } from '../@data/get-url';
-import MaterialIcon from '@material/react-material-icon';
 
 class PersonDetail extends Component {
-  constructor(props){
+  constructor(props) {
     super();
     this.state = {
-      data: Object.assign({},NurseSchema),
+      data: Object.assign({}, NurseSchema),
       changePass: false,
       load: true,
       loadText: 'Cargando Información',
       completed: false,
       urlCompleted: '/',
-      readInfo:{
+      readInfo: {
         message: '',
         linkRef: '',
         seconds: 10,
@@ -39,13 +38,13 @@ class PersonDetail extends Component {
       }
     }
   }
-  componentDidMount(){
+  componentDidMount() {
     const id = this.props.match.params.id;
     let url = getUrl.back(this.props.history.location.pathname);
     let self = this;
     NurseHttp.getId(
       id,
-      (data)=>{
+      (data) => {
         self.setState({
           urlCompleted: url.path,
           load: false,
@@ -54,68 +53,68 @@ class PersonDetail extends Component {
           }
         });
       },
-      (error)=>{
+      (error) => {
         console.log(error);
       }
     );
   }
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.cancelRead();
   }
-  handleSend = (e)=>{
+  handleSend = (e) => {
     e.preventDefault();
     let self = this;
     let id = this.state.data.id_nurse;
     let rfid = this.state.data.rfid;
-    NurseHttp.enabled(id,rfid,
-      (data)=>{
+    NurseHttp.enabled(id, rfid,
+      (data) => {
         self.completeSend(data);
       },
-      (error)=>{
+      (error) => {
         self.completeError(error);
       })
   }
 
-  completeSend = (result)=>{
+  completeSend = (result) => {
     //console.log(result);
     this.setState({
       completed: true
     })
   }
-  completeError = ()=>{
+  completeError = () => {
     this.setState({
       load: false
     })
   }
 
-  changeState = (keyObject)=>{
+  changeState = (keyObject) => {
     let name = Object.keys(keyObject)[0];
     let data = this.state.data;
-    data[name] = keyObject[name]; 
+    data[name] = keyObject[name];
     this.setState({
       data: data
     })
   }
 
-  startRead = ()=>{
+  startRead = () => {
     let self = this;
     this.startCount();
-    this.interval = setInterval(()=> this.startCount(),1000);
+    this.interval = setInterval(() => this.startCount(), 1000);
     ReadHttp.activeRead();
-    ReadHttp.readCode(0,(data)=>{
+    ReadHttp.readCode(0, (data) => {
       self.cancelCount();
-      if(data.status){
+      if (data.status) {
         let dataNew = self.state.data;
         let readInfo = self.state.readInfo;
         readInfo.load = false;
-        if(data.result.enabled){
+        if (data.result.enabled) {
           // disponible
           dataNew.rfid = data.result.rfid;
           self.setState({
             data: dataNew,
             readInfo
           });
-        }else{
+        } else {
           // ya en uso
           console.log(this.props.history);
           readInfo.message = `El RFID ya esta en USO por: ${data.result.user.first_name} ${data.result.user.last_name}`;
@@ -126,31 +125,31 @@ class PersonDetail extends Component {
           });
         }
       }
-    },(error)=>{
+    }, (error) => {
       self.completeError(error.result);
     })
   }
-  cancelRead = ()=>{
+  cancelRead = () => {
     this.cancelCount();
     ReadHttp.cancelRead();
   }
-  startCount = ()=>{
-    if(this.state.readInfo.seconds == 0){
+  startCount = () => {
+    if (this.state.readInfo.seconds === 0) {
       this.cancelCount();
-    }else{
+    } else {
       let readInfo = this.state.readInfo;
-      if(this.state.readInfo.seconds == 10){
+      if (this.state.readInfo.seconds === 10) {
         readInfo.load = true;
       }
-      readInfo.seconds =  readInfo.seconds - 1;
+      readInfo.seconds = readInfo.seconds - 1;
       this.setState({
         readInfo
-      },()=>{
+      }, () => {
         console.log(this.state.readInfo.seconds)
       });
     }
   }
-  cancelCount = ()=>{
+  cancelCount = () => {
     clearInterval(this.interval);
     let readInfo = this.state.readInfo;
     readInfo.seconds = 10;
@@ -166,59 +165,59 @@ class PersonDetail extends Component {
     return (
       <div>
         <Header
-          title = "Habilitar Enfermera"
-          match = { this.props.match }
-          theme = {{
+          title="Habilitar Enfermera"
+          match={this.props.match}
+          theme={{
             background: "#008000",
-            color:"#fff"
+            color: "#fff"
 
           }}
         />
 
         {
           !this.state.load ?
-          <form onSubmit={ this.handleSend }>
-            <div className="graduate-container">
-              <div className="graduate-form">
+            <form onSubmit={this.handleSend}>
+              <div className="graduate-container">
+                <div className="graduate-form">
 
-                <fieldset className="graduate-form--fieldset">
-                  <legend>
-                    Cuenta de:
+                  <fieldset className="graduate-form--fieldset">
+                    <legend>
+                      Cuenta de:
                   </legend>
-                  <aside className="graduate-form--control">
-                    <Subtitle1
-                      style={{
-                        color:'#888787'
-                      }}
-                    >
-                      { this.state.data.first_name } { this.state.data.last_name} - { this.state.data.cellphone }
-                    </Subtitle1>
-                  </aside>
-                </fieldset>
+                    <aside className="graduate-form--control">
+                      <Subtitle1
+                        style={{
+                          color: '#888787'
+                        }}
+                      >
+                        {this.state.data.first_name} {this.state.data.last_name} - {this.state.data.cellphone}
+                      </Subtitle1>
+                    </aside>
+                  </fieldset>
 
-                <NurseRead
-                  { ...this.state.data }
-                  { ...this.state.readInfo }
-                  changeState = { this.changeState }
-                  startRead = { this.startRead }
-                  cancelRead = { this.cancelRead }
-                />
+                  <NurseRead
+                    {...this.state.data}
+                    {...this.state.readInfo}
+                    changeState={this.changeState}
+                    startRead={this.startRead}
+                    cancelRead={this.cancelRead}
+                  />
+                </div>
               </div>
-            </div>
 
-            <Action
-              match = { this.props.match }
-            />
-          </form>
-          :
-          <Loading title={ this.state.loadText }/>
+              <Action
+                match={this.props.match}
+              />
+            </form>
+            :
+            <Loading title={this.state.loadText} />
         }
 
         {
-          this.state.completed?
-          <Redirect to={ this.state.urlCompleted } />
-          :
-          <span/>
+          this.state.completed ?
+            <Redirect to={this.state.urlCompleted} />
+            :
+            <span />
         }
       </div>
     )

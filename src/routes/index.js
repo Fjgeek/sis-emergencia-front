@@ -11,7 +11,7 @@ import { USER, PASS } from '../pages/@data/@server';
 
 class RouterApp extends Component {
 
-  constructor(props){
+  constructor(props) {
     super();
     this.state = {
       auth: false,
@@ -24,23 +24,23 @@ class RouterApp extends Component {
       }
     }
   }
-  componentDidMount(){
-    if(this.getSession()){
+  componentDidMount() {
+    if (this.getSession()) {
       this.setState({
         auth: true
       })
     }
   }
-  showAlert = (message, theme)=>{
+  showAlert = (message, theme) => {
     this.setState({
-      alert:{
+      alert: {
         visible: true,
         message,
         theme
       }
     });
   }
-  hideAlert = ()=>{
+  hideAlert = () => {
     this.setState({
       alert: false,
       message: '',
@@ -48,27 +48,27 @@ class RouterApp extends Component {
     })
   }
 
-  changeState = (data)=>{
+  changeState = (data) => {
     this.setState(data);
   }
 
-  signIn = (e)=>{
+  signIn = (e) => {
     e.preventDefault();
     this.hideAlert();
-    if(this.state.user == USER){
-      if(this.state.password == PASS){
+    if (this.state.user === USER) {
+      if (this.state.password === PASS) {
         this.setState({
           auth: true
         });
         this.saveSession();
-      }else{
-        this.showAlert("Contraseña Incorrecta","error")
+      } else {
+        this.showAlert("Contraseña Incorrecta", "error")
       }
-    }else{
-      this.showAlert("Usuario no registrado","error");
+    } else {
+      this.showAlert("Usuario no registrado", "error");
     }
   }
-  signOut = (e)=>{
+  signOut = (e) => {
     e.preventDefault();
     this.setState({
       auth: false
@@ -76,31 +76,31 @@ class RouterApp extends Component {
     this.destroySession();
   }
 
-  saveSession = ()=>{
-    localStorage.setItem("session",JSON.stringify({session:true}));
+  saveSession = () => {
+    localStorage.setItem("session", JSON.stringify({ session: true }));
   }
-  getSession = ()=>{
+  getSession = () => {
     return JSON.parse(localStorage.getItem("session")) || false;
   }
-  destroySession = ()=>{
+  destroySession = () => {
     localStorage.removeItem("session");
   }
-  
-  render(){
-    return(
+
+  render() {
+    return (
       <Router>
         {
           this.state.auth ?
-          <Main
-            signOut = { this.signOut }
-          >
-            <RouterList user={ this.state.user }/>
-          </Main>
-          : <Login
-              signIn = { this.signIn }
-              hideAlert = { this.hideAlert }
-              changeState = { this.changeState }
-              data = { this.state }
+            <Main
+              signOut={this.signOut}
+            >
+              <RouterList user={this.state.user} />
+            </Main>
+            : <Login
+              signIn={this.signIn}
+              hideAlert={this.hideAlert}
+              changeState={this.changeState}
+              data={this.state}
             />
         }
       </Router>

@@ -8,7 +8,7 @@ import Turn from './turn';
 import EmergencyHttp from '../@data/emergency-http';
 
 class Home extends Component {
-  constructor(props){
+  constructor(props) {
     super();
     this.state = {
       data: [],
@@ -16,64 +16,67 @@ class Home extends Component {
       request: true
     }
   }
-  componentDidMount(){
-    let self = this;
+  componentDidMount() {
     EmergencyHttp.activeRead();
     this.initRealTime();
-    this.interval = setInterval(()=> this.initRealTime(),2000);
+    this.interval = setInterval(() => this.initRealTime(), 2000);
   }
-  componentWillUnmount(){
+  componentWillUnmount() {
     clearInterval(this.interval);
     EmergencyHttp.cancelRead();
     this.setState({
       request: false
     });
   }
-  initRealTime = ()=>{
+  initRealTime = () => {
     let self = this;
-    if(this.state.request){
+    if (this.state.request) {
       EmergencyHttp.emergencyNow(
-        (data)=>{
-          self.updateData(data.result);
+        (data) => {
+          if (data.result) {
+            self.updateData(data.result);
+          } else {
+            self.updateData([]);
+          }
         },
-        (error)=>{
+        (error) => {
           console.log(error);
         });
     }
   }
-  updateData = (data)=>{
+  updateData = (data) => {
     this.setState({
       data
     })
   }
 
-  showFull = ()=>{
+  showFull = () => {
     if (document.fullscreenEnabled) {
-      if(this.state.fullscreen){
-        if(window.document.fullscreenElement != null){
+      if (this.state.fullscreen) {
+        if (window.document.fullscreenElement != null) {
           window.document.exitFullscreen();
         }
         this.setState({
           fullscreen: false
         })
-      }else{
+      } else {
         window.document.body.requestFullscreen();
         this.setState({
           fullscreen: true
         })
-      }      
-    }else{
+      }
+    } else {
       alert('su dispositivo no soporta pantalla completa')
     }
   }
   render() {
     return (
-      <div className={ `home-container ${this.state.fullscreen?'home-full-screen':''}` }>
+      <div className={`home-container ${this.state.fullscreen ? 'home-full-screen' : ''}`}>
         <HomeHeader />
-        <Turn 
-          showFull = { this.showFull }
-          fullscreen = { this.state.fullscreen }
-          data = { this.state.data }
+        <Turn
+          showFull={this.showFull}
+          fullscreen={this.state.fullscreen}
+          data={this.state.data}
         />
         {/* <HomeHeader />
         {

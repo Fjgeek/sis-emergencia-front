@@ -4,39 +4,38 @@ import {
 } from 'react-router-dom';
 import './navigation.css';
 import MaterialIcon from '@material/react-material-icon';
-import Button from '@material/react-button';
 
 
 const Navigation = (props) => {
-  let MenuEvent = ()=>{
+  let MenuEvent = () => {
     return true;
   };
-  if(props.movil){
+  if (props.movil) {
     MenuEvent = props.handleToggle;
   }
   return (
     <div className="Nav-container">
-        <aside className="Nav-user">
-          <MaterialIcon hasRipple icon='explore'/>
-        </aside>
-        <ul className="Nav-menu-list">
-          <li>
-            <NavLink to="/" exact={true} activeClassName="active-menu" onClick={ MenuEvent }>
-              Emergencias
+      <aside className="Nav-user">
+        <MaterialIcon hasRipple icon='explore' />
+      </aside>
+      <ul className="Nav-menu-list">
+        <li>
+          <NavLink to="/" exact={true} activeClassName="active-menu" onClick={MenuEvent}>
+            Emergencias
             </NavLink>
-          </li>
-          <li>
-            <NavLink to="/enfermeras" activeClassName="active-menu" onClick={ MenuEvent }>
-              Enfermeras
+        </li>
+        <li>
+          <NavLink to="/enfermeras" activeClassName="active-menu" onClick={MenuEvent}>
+            Enfermeras
             </NavLink>
-          </li>
-          <li>
-            <NavLink to="/historial" activeClassName="active-menu" onClick={ MenuEvent }>
-              Historial
+        </li>
+        <li>
+          <NavLink to="/historial" activeClassName="active-menu" onClick={MenuEvent}>
+            Historial
             </NavLink>
-          </li>
-          
-        </ul>
+        </li>
+
+      </ul>
     </div>
   )
 }
