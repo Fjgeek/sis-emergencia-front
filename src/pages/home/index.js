@@ -1,11 +1,14 @@
-import React, { Component } from 'react';
-import './home.css';
+import React, { Component } from 'react'
+import './home.css'
+import '@material/elevation/dist/mdc.elevation.css'
 
 /* Components*/
-import HomeHeader from './home-header';
-import Turn from './turn';
+import HomeHeader from './home-header'
+import { Elevation } from '@rmwc/elevation'
+import Clock from 'react-live-clock'
+import Turn from './turn'
 /* Data */
-import EmergencyHttp from '../@data/emergency-http';
+import EmergencyHttp from '../@data/emergency-http'
 
 class Home extends Component {
   constructor(props) {
@@ -13,7 +16,7 @@ class Home extends Component {
     this.state = {
       data: [],
       fullscreen: false,
-      request: true
+      request: true,
     }
   }
   componentDidMount() {
@@ -73,30 +76,14 @@ class Home extends Component {
     return (
       <div className={`home-container ${this.state.fullscreen ? 'home-full-screen' : ''}`}>
         <HomeHeader />
+        <Elevation z={16} className="home-clock">
+          <Clock format="HH:mm:ss" ticking={true} interval={1000} />
+        </Elevation>
         <Turn
           showFull={this.showFull}
           fullscreen={this.state.fullscreen}
           data={this.state.data}
         />
-        {/* <HomeHeader />
-        {
-          this.state.rooms.map( (room)=>(
-            <div key={ `room-${ room.id_room }` }>
-              <h3>
-                { room.room_label }
-              </h3>
-
-              {
-                room.beds.map( (bed, index)=>(
-                  <div key={ `bed-${ bed.id_bed + index }` }>
-                    { bed.bed_label }
-                  </div>
-                ))
-              }
-            </div>
-          ))
-        } */}
-
       </div>
     )
   }

@@ -7,10 +7,7 @@ import Header from '../../common/header';
 import Loading from '../../common/loading';
 import Action from '../../common/action';
 import NurseRead from './nurse-read';
-import {
-  Subtitle1
-} from '@material/react-typography';
-
+import { Typography } from '@rmwc/typography'
 /* Interface */
 import { NurseSchema } from './nurse-schema';
 
@@ -185,13 +182,16 @@ class PersonDetail extends Component {
                       Cuenta de:
                   </legend>
                     <aside className="graduate-form--control">
-                      <Subtitle1
+                      <Typography use="headline4">{this.state.data.first_name} {this.state.data.last_name}</Typography>
+                      <br />
+                      <Typography
+                        use="headline6"
                         style={{
                           color: '#888787'
                         }}
                       >
-                        {this.state.data.first_name} {this.state.data.last_name} - {this.state.data.cellphone}
-                      </Subtitle1>
+                        {this.state.data.cellphone}
+                      </Typography>
                     </aside>
                   </fieldset>
 

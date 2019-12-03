@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './alert.css';
 /* Components */
-import MaterialIcon from '@material/react-material-icon';
+import { Icon } from '@rmwc/icon';
 
 const Alert = (props) => {
   return (
-    <div className={ props.max ? "alert-container alert-max":"alert-container"}>
+    <div className={props.max ? "alert-container alert-max" : "alert-container"}>
       <div className={`alert-form alert-${props.theme} animated pulse`}>
-        { props.message }
-        <span className="alert-close" onClick={ props.hideAlert }>
-          <MaterialIcon icon="close"/>
+        {props.message}
+        <span className="alert-close" onClick={props.hideAlert}>
+          <Icon icon="close" />
         </span>
       </div>
     </div>
@@ -24,10 +24,10 @@ Alert.propTypes = {
   hideAlert: PropTypes.func
 }
 Alert.defaultProps = {
-  max: false, 
+  max: false,
   message: 'default',
   theme: '',
-  hideAlert: ()=>{}
+  hideAlert: () => { }
 }
 
 export default Alert;

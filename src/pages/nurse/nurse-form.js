@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import '../@style/container.css';
 import '../@style/form.css';
 /* Components */
-import TextField, {HelperText, Input} from '@material/react-text-field';
-import MaterialIcon from '@material/react-material-icon';
+import { TextField } from '@rmwc/textfield';
+import NumberFormat from 'react-number-format';
 import Remove from '../../common/remove';
 import NurseRead from './nurse-read';
 
-const NurseForm = (props)=>{
+const NurseForm = (props) => {
   return (
     <div className="graduate-container">
       <div className="graduate-form">
@@ -19,50 +19,54 @@ const NurseForm = (props)=>{
 
           <aside className="graduate-form--control">
             <TextField
-              label='Nombre'
-              helperText={<HelperText>Help Me!</HelperText>}
-              onTrailingIconSelect={ () => props.changeState({first_name: ''})}
-              trailingIcon={<MaterialIcon role="button" icon="close"/>}
-              className='graduate-form--input'
-            ><Input
               required
-              id="first_name"
+              type="text"
+              label="Nombre"
+              helpText="Escriba nombre/s"
               value={props.first_name}
-              onChange={(e) => props.changeState({first_name: e.currentTarget.value})} />
-            </TextField>
+              onChange={(e) => props.changeState({ first_name: e.currentTarget.value })}
+              pattern="^[a-zA-Zñüáéíóú ]{1,100}$"
+              trailingIcon={{
+                icon: 'close',
+                tabIndex: 1,
+                onClick: () => props.changeState({ first_name: '' })
+              }}
+            />
           </aside>
-
-          <aside className="graduate-form--control">  
-            <TextField
-              label='Apellido'
-              helperText={<HelperText>Help Me!</HelperText>}
-              onTrailingIconSelect={() => props.changeState({last_name: ''})}
-              trailingIcon={<MaterialIcon role="button" icon="close "/>}
-              className='graduate-form--input'
-            ><Input
-              required
-              id="last_name"
-              value={props.last_name}
-              onChange={(e) => props.changeState({last_name: e.currentTarget.value})} />
-            </TextField>
-          </aside>
-
-          <div className="graduate-separate"/>
 
           <aside className="graduate-form--control">
             <TextField
-              label='Carnet de Identidad'
-              helperText={<HelperText>Help Me!</HelperText>}
-              onTrailingIconSelect={() => props.changeState({ci: ''})}
-              trailingIcon={<MaterialIcon role="button" icon="close "/>}
-              className='graduate-form--input'
-            ><Input
               required
-              id="ci"
-              value={props.ci}
+              type="text"
+              label="Apellido"
+              helpText="Escriba apellido/s"
+              value={props.last_name}
+              onChange={(e) => props.changeState({ last_name: e.currentTarget.value })}
+              pattern="^[a-zA-Zñüáéíóú ]{1,100}$"
+              trailingIcon={{
+                icon: 'close',
+                tabIndex: 1,
+                onClick: () => props.changeState({ last_name: '' })
+              }}
+            />
+          </aside>
+
+          <div className="graduate-separate" />
+
+          <aside className="graduate-form--control">
+            <TextField
+              required
               type="number"
-              onChange={(e) => props.changeState({ci: e.currentTarget.value})} />
-            </TextField>
+              label="Carnet de Identidad"
+              helpText="Escriba número de CI"
+              value={props.ci}
+              onChange={(e) => props.changeState({ ci: e.currentTarget.value })}
+              trailingIcon={{
+                icon: 'close',
+                tabIndex: 1,
+                onClick: () => props.changeState({ ci: '' })
+              }}
+            />
           </aside>
         </fieldset>
 
@@ -71,39 +75,43 @@ const NurseForm = (props)=>{
             Contactos
           </legend>
 
-          <aside className="graduate-form--control">  
-            <TextField
-              label='Número de Celular'
-              helperText={<HelperText>Help Me!</HelperText>}
-              onTrailingIconSelect={() => props.changeState({cellphone: ''})}
-              trailingIcon={<MaterialIcon role="button" icon="close "/>}
-              className='graduate-form--input'
-            ><Input
-              required
-              id="cellphone"
+          <aside className="graduate-form--control">
+            <NumberFormat
+              customInput={TextField}
+              type="text"
+              placeholder="Ingrese número"
               value={props.cellphone}
-              onChange={(e) => props.changeState({cellphone: e.currentTarget.value})} />
-            </TextField>
+              format="### #####"
+              mask="_ "
+              onValueChange={(e) => {
+                props.changeState({ cellphone: e.value })
+              }}
+              trailingIcon={{
+                icon: 'close',
+                tabIndex: 1,
+                onClick: () => props.changeState({ cellphone: '' })
+              }}
+            />
           </aside>
 
         </fieldset>
 
         {
-          props.editForm?
-          <Remove
-            text="(*) Si usted esta seguro que quiere deshabilitar al usuario, es bajo su responsabilidad."
-            label="DESHABILITAR"
-            handleEvent = { props.disabledAccount }
+          props.editForm ?
+            <Remove
+              text="(*) Si usted esta seguro que quiere deshabilitar al usuario, es bajo su responsabilidad."
+              label="DESHABILITAR"
+              handleEvent={props.disabledAccount}
 
-          />
-          :
-          <NurseRead
-            rfid = { props.rfid }
-            { ...props.readInfo }
-            changeState = { props.changeState }
-            startRead = { props.startRead }
-            cancelRead = { props.cancelRead }
-          />
+            />
+            :
+            <NurseRead
+              rfid={props.rfid}
+              {...props.readInfo}
+              changeState={props.changeState}
+              startRead={props.startRead}
+              cancelRead={props.cancelRead}
+            />
         }
 
       </div>
@@ -129,8 +137,8 @@ NurseForm.defaultProps = {
   cellphone: '',
   rfid: '',
   editForm: false,
-  changeState: ()=>{},
-  disabledAccount: ()=>{}
+  changeState: () => { },
+  disabledAccount: () => { }
 }
 
 export default NurseForm;

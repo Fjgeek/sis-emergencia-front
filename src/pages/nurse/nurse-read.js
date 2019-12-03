@@ -5,19 +5,18 @@ import PropTypes from 'prop-types';
 import {
   NavLink
 } from 'react-router-dom';
-import TextField, {HelperText, Input} from '@material/react-text-field';
-import MaterialIcon from '@material/react-material-icon';
-import Button from '@material/react-button';
+import { TextField } from '@rmwc/textfield'
+import { Button } from '@rmwc/button';
 
-const NurseRead = (props)=>{
-  return(
+const NurseRead = (props) => {
+  return (
     <fieldset className="graduate-form--fieldset">
       <legend>
         Tarjeta RFID
       </legend>
 
       <aside className="graduate-form--control">
-      <span
+        <span
           style={{
             fontSize: 12,
             fontWeight: 'bold',
@@ -28,54 +27,50 @@ const NurseRead = (props)=>{
           }}
         >
           {
-            props.message !== ""?
-            <div>
-              { `${props.message} ` }
-              <NavLink to={ props.linkRef }>
-                Ver Usuario
+            props.message !== "" ?
+              <div>
+                {`${props.message} `}
+                <NavLink to={props.linkRef}>
+                  Ver Usuario
               </NavLink>
-            </div>
-            :
-            ``
+              </div>
+              :
+              ``
           }
         </span>
         <TextField
-          label='Código RFID'
-          helperText={
-            <HelperText 
-              persistent={true}
-              className={`${props.load? 'graduate-label--load':''}`}
-              >
-                {
-                  props.load ?
-                  `Esperando lectura ${props.seconds} seg`
-                  :
-                  '(*)Presione LEER RFID y coloque su tarjeta en el lector'
-                }
-            </HelperText>
-          }
-          onTrailingIconSelect={() => props.changeState({rfid: ''})}
-          trailingIcon={<MaterialIcon role="button" icon="close "/>}
-          className='graduate-form--input'
-        ><Input
           required
-          id="rfid"
-          onKeyDown = {(e)=>{e.preventDefault()}}
+          label="Código RFID"
+          helpText={{
+            persistent: true,
+            validationMsg: true,
+            children: props.load ?
+              `Esperando lectura ${props.seconds} seg`
+              :
+              '(*)Presione LEER RFID y coloque su tarjeta en el lector'
+          }}
+          className={`${props.load ? 'graduate-label--load' : ''}`}
           value={props.rfid}
-          onChange={(e) => props.changeState({rfid: e.currentTarget.value})} />
-        </TextField>
+          onKeyDown={(e) => { e.preventDefault() }}
+          onChange={(e) => props.changeState({ rfid: e.currentTarget.value })}
+          trailingIcon={{
+            icon: 'close',
+            tabIndex: 1,
+            onClick: () => props.changeState({ rfid: '' })
+          }}
+        />
         <Button
           raised
-          onClick = { props.load? props.cancelRead:props.startRead }
+          onClick={props.load ? props.cancelRead : props.startRead}
           type="button"
-          icon={<MaterialIcon icon="credit_card"></MaterialIcon>}
-          className={ `graduate-form--input ${props.load ? 'graduate-btn--cancel':'graduate-btn--read'}` }
+          icon="credit_card"
+          className={`graduate-form--input ${props.load ? 'graduate-btn--cancel' : 'graduate-btn--read'}`}
         >
           {
-            props.load?
-            'CANCELAR'
-            :
-            'LEER RFID'
+            props.load ?
+              'CANCELAR'
+              :
+              'LEER RFID'
           }
         </Button>
       </aside>
@@ -101,9 +96,9 @@ NurseRead.defaultProps = {
   seconds: 10,
   load: false,
   rfid: '',
-  changeState: ()=>{},
-  startRead: ()=>{},
-  cancelRead: ()=>{}
+  changeState: () => { },
+  startRead: () => { },
+  cancelRead: () => { }
 }
 
 export default NurseRead;

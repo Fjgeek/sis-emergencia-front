@@ -10,3 +10,12 @@
   top: 0;
   z-index: 11;
 }
+.home-clock{
+  background: #028001;
+  color: #ffffff;
+  width: 220px;
+  text-align: center;
+  font-size: 48px;
+  border-radius: 10px;
+  margin: 15px auto;
+}

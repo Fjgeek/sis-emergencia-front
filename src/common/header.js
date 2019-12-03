@@ -1,16 +1,20 @@
-import React,{ Component } from 'react';
-import './header.css';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import './header.css'
+import PropTypes from 'prop-types'
+import {
+  withRouter
+} from 'react-router'
 import {
   NavLink
-} from 'react-router-dom';
+} from 'react-router-dom'
 /* Components */
-import BreadCrump from './breadcrump';
-import Button from '@material/react-button';
-import MaterialIcon from '@material/react-material-icon';
+import BreadCrump from './breadcrump'
+import { Button } from '@rmwc/button'
+import { IconButton } from '@rmwc/icon-button'
+import { Icon } from '@rmwc/icon'
 
 /* Data */
-import { getUrl } from '../pages/@data/get-url';
+import { getUrl } from '../pages/@data/get-url'
 
 /* 
  *  ---DATOS DE ENTRADA---
@@ -23,48 +27,48 @@ import { getUrl } from '../pages/@data/get-url';
  */
 
 class Header extends Component {
-  constructor(props){
-    super();
+  constructor(props) {
+    super()
     this.state = {
       scroller: true,
       limit: 75,
       urlBack: '/'
     }
-    this.header = React.createRef();
+    this.header = React.createRef()
   }
-  componentDidMount(){
-    let url = getUrl.back(this.props.match.url);
-    window.addEventListener('scroll', this.scrollAnimations, false);
-    this.header.current.style.height = String(this.header.current.offsetHeight).concat('px');
-    if(this.header.current.offsetHeight>145){
+  componentDidMount() {
+    let url = getUrl.back(this.props.match.url)
+    window.addEventListener('scroll', this.scrollAnimations, false)
+    this.header.current.style.height = String(this.header.current.offsetHeight).concat('px')
+    if (this.header.current.offsetHeight > 145) {
       this.setState({
         limit: 150,
-        urlBack: url.path 
-      });
-    }else{
+        urlBack: url.path
+      })
+    } else {
       this.setState({
         limit: 75,
-        urlBack: url.path 
-      });
+        urlBack: url.path
+      })
     }
   }
-  componentWillUnmount(){
-    window.removeEventListener('scroll', this.scrollAnimations, false);
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.scrollAnimations, false)
   }
-  scrollAnimations = ()=>{
-    let position = window.scrollY;
-    let self = this;
-    window.requestAnimationFrame(function() {
-      self.stopNav(position);
-    });
+  scrollAnimations = () => {
+    let position = window.scrollY
+    let self = this
+    window.requestAnimationFrame(function () {
+      self.stopNav(position)
+    })
   }
-  stopNav = (sp)=>{ //sp = scroll position
-    if(sp>this.state.limit && this.state.scroller){
+  stopNav = (sp) => { //sp = scroll position
+    if (sp > this.state.limit && this.state.scroller) {
       this.setState({
         scroller: false
-      });
-    }else{
-      if(sp<=this.state.limit && !this.state.scroller){
+      })
+    } else {
+      if (sp <= this.state.limit && !this.state.scroller) {
         this.setState({
           scroller: true
         })
@@ -72,59 +76,75 @@ class Header extends Component {
     }
   }
 
-  render(){
-    const { match, actions, title, theme } = this.props;
+  render() {
+    const { match, history, title, actions, theme, back } = this.props
     return (
-      <div 
-        ref={ this.header } 
-        className={`${this.state.scroller? 'Header':'HeaderFixed'}`}
+      <div
+        ref={this.header}
+        className={`${this.state.scroller ? 'Header' : 'HeaderFixed'}`}
         style={{
           backgroundColor: theme.background
         }}
       >
-        <div 
-          className={`${this.state.scroller?'':'HeaderFixed-container'}`}
+        <div
+          className={`${this.state.scroller ? '' : 'HeaderFixed-container'}`}
           style={{
             backgroundColor: theme.background
           }}
         >
 
-          <aside className={`${this.state.scroller? 'Header-navigation':'HeaderFixed-navigation'}`}>
+          <aside className={`${this.state.scroller ? 'Header-navigation' : 'HeaderFixed-navigation'}`}>
             <BreadCrump
-              match = { match }
+              match={match}
             />
           </aside>
-          <aside className={`${this.state.scroller? 'Header-action':'HeaderFixed-action'}`}>
-            <h1 className={`${this.state.scroller? 'Header-action--title':'HeaderFixed-action--title'}`}>
-              <NavLink 
-                to={ this.state.urlBack }
-                className={`${ this.state.scroller? 'Header-back':'HeaderFixed-back'}`}
-              >
-                <MaterialIcon role="button" icon="keyboard_backspace"/>
-              </NavLink>
-              { title }
+          <aside className={`${this.state.scroller ? 'Header-action' : 'HeaderFixed-action'}`}>
+            <h1 className={`${this.state.scroller ? 'Header-action--title' : 'HeaderFixed-action--title'}`}>
+              {
+                back ?
+                  <span className={`${this.state.scroller ? 'Header-back' : 'HeaderFixed-back'}`}>
+                    <IconButton
+                      icon="keyboard_backspace"
+                      style={{
+                        outline: 'none'
+                      }}
+                      onClick={() => { history.goBack() }}
+                    />
+                  </span>
+                  :
+                  <NavLink
+                    to={this.state.urlBack}
+                    className={`${this.state.scroller ? 'Header-back' : 'HeaderFixed-back'}`}
+                  >
+                    <Icon icon="keyboard_backspace" />
+                  </NavLink>
+              }
+              {title}
             </h1>
             {
               actions.length === 0 ?
-              <div/>
-              :
-              <div className={`${this.state.scroller? 'Header-action--button':'HeaderFixed-action--button'}`}>
-                {
-                  actions.map( (action,index)=>(
-                    <NavLink 
-                      to={ action.on } 
-                      key={`ab${index}`}
-                      className="Header-link">
-                      <Button
-                        raised
-                        className={ action.theme }
-                      >
-                        { action.title }
-                      </Button>
-                    </NavLink>
-                  ))
-                }
-              </div>
+                <div />
+                :
+                <div className={`${this.state.scroller ? 'Header-action--button' : 'HeaderFixed-action--button'}`}>
+                  {
+                    actions.map((action, index) => (
+                      <NavLink
+                        to={action.on}
+                        key={`ab${index}`}
+                        className="Header-link">
+                        {this.state.scroller ?
+                          <Button
+                            raised
+                            className={action.theme}
+                            label={action.title}
+                          />
+                          :
+                          <IconButton icon={action.icon} className={action.theme} />
+                        }
+                      </NavLink>
+                    ))
+                  }
+                </div>
             }
           </aside>
 
@@ -136,18 +156,20 @@ class Header extends Component {
 
 Header.propTypes = {
   title: PropTypes.string,
-  match: PropTypes.object,
   actions: PropTypes.array,
-  theme: PropTypes.object
+  theme: PropTypes.object,
+  back: PropTypes.bool,
+  match: PropTypes.shape({}).isRequired,
+  history: PropTypes.shape({}).isRequired,
 }
 Header.defaultProps = {
   title: "Titulo",
-  match: {},
   actions: [],
-  theme:{
+  theme: {
     background: '#34017d',
     color: '#ffffff'
-  }
+  },
+  back: false
 }
 
-export default Header;
+export default withRouter(Header)

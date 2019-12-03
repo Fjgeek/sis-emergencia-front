@@ -1,5 +1,5 @@
 .Nav-container{
-  padding: 64px 0px 0px 0px;
+  padding: 30px 0px 0px 0px;
 }
 .Nav-menu-list{
   padding: 0px;
@@ -11,12 +11,13 @@
   position: relative;
   padding: 12px 40px;
   text-decoration: none;
-  color: green!important;
+  color: #3b3b3b;
+  font-family: 'Open Sans', sans-serif;
   font-weight: 500;
 }
 .active-menu{
-  background: #ececec!important;
-  color: #000000!important;
+  background: #6f756f!important;
+  color: #ffffff!important;
 }
 .Nav-user{
   padding: 25px 0px;

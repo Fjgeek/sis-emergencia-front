@@ -3,8 +3,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import RouterList from './router-list';
 
 /* components */
-import Main from '../pages/main';
-import Login from '../pages/login';
+import Main from '../pages/Main';
+import Login from '../pages/Login';
 
 /* Data */
 import { USER, PASS } from '../pages/@data/@server';

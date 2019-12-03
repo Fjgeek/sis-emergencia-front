@@ -3,14 +3,18 @@ import PropTypes from 'prop-types';
 import './turn.css';
 
 /* Components */
-import Card, {
-  CardPrimaryContent,
+import {
+  Card,
+  CardPrimaryAction,
   CardActions,
-  CardActionButtons,
-  CardActionIcons
-} from '@material/react-card';
-import Button from '@material/react-button';
-import MaterialIcon from '@material/react-material-icon';
+  CardActionButtons
+} from '@rmwc/card';
+import { Typography } from '@rmwc/typography'
+import { Icon } from '@rmwc/icon'
+import { Button } from '@rmwc/button'
+
+/* Theme */
+import { RequestTheme } from '../@style/RequestTheme'
 
 const Turn = ({
   showFull,
@@ -25,9 +29,9 @@ const Turn = ({
         onClick={showFull}
         icon={
           fullscreen ?
-            <MaterialIcon icon="fullscreen_exit"></MaterialIcon>
+            <Icon icon="fullscreen_exit" />
             :
-            <MaterialIcon icon="fullscreen"></MaterialIcon>
+            <Icon icon="fullscreen" />
         }
       >
         {
@@ -42,20 +46,22 @@ const Turn = ({
               className="turn-card"
               key={emergency.id_emergency}
             >
-              <CardPrimaryContent>
-                <div className="turn-bed">
-                  {emergency.labelBed}
+              <CardPrimaryAction>
+                <div
+                  className="turn-bed"
+                  style={{
+                    background: `${RequestTheme[emergency.priority].color}`,
+                    color: `${RequestTheme[emergency.priority].textColor}`,
+                  }}
+                >
+                  {emergency.labelBed}<br />
+                  <Typography use="headline5" style={{ opacity: 0.7 }}>{emergency.time_request}</Typography>
                 </div>
-              </CardPrimaryContent>
-
-              <CardActions>
+              </CardPrimaryAction>
+              <CardActions style={{ justifyContent: 'center' }}>
                 <CardActionButtons>
-                  <h4>{emergency.labelRoom}</h4>
+                  <Typography use="headline6">{emergency.labelRoom}</Typography>
                 </CardActionButtons>
-
-                <CardActionIcons>
-                  <MaterialIcon icon="access_time" /><i>{emergency.time_request}</i>
-                </CardActionIcons>
               </CardActions>
             </Card>
           )

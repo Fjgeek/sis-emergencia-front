@@ -4,18 +4,18 @@ import {
   NavLink
 } from 'react-router-dom';
 
-import Button from '@material/react-button';
+import { Button } from '@rmwc/button';
 
 /* Data */
 import { getUrl } from '../pages/@data/get-url';
 
-const Action = (props)=>{
+const Action = (props) => {
   let urls = getUrl.parts(props.match.url);
-  let urlCompleted = urls[urls.length-2];
+  let urlCompleted = urls[urls.length - 2];
 
   return (
     <div className="graduate-form--action">
-      <NavLink to={ urlCompleted.path }>
+      <NavLink to={urlCompleted.path}>
         <Button
           type="button"
           style={{
@@ -24,9 +24,9 @@ const Action = (props)=>{
         >
           Cancelar
         </Button>
-      </NavLink>      
+      </NavLink>
       <Button
-        type = 'submit'
+        type='submit'
         raised
         style={{
           backgroundColor: '#059805'

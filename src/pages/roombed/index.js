@@ -5,37 +5,37 @@ import {
 } from 'react-router-dom';
 /* components */
 import ScrollTop from '../../common/scrolltop';
-import RoomBedList from './roombed-list';
+import RoombedList from './roombed-list';
 // import PositionNew from './position-new';
-// import PositionDetail from './position-detail';
+import RoombedDetail from './roombed-detail';
 
 
-class Position extends Component {
+class Roombed extends Component {
   render() {
     const { match } = this.props;
     return (
       <div>
         <ScrollTop>
           <Switch>
-              <Route
-                exact
-                path={match.url}
-                component={ RoomBedList }
-              />
-              {/* <Route 
+            <Route
+              exact
+              path={match.url}
+              component={RoombedList}
+            />
+            {/* <Route 
                 exact
                 path={`${match.url}/nuevo`}
                 component={ PositionNew }
-              />
-              <Route
-                path={`${match.url}/:id`}
-                component ={ PositionDetail }
               /> */}
-            </Switch>
+            <Route
+              path={`${match.url}/:id`}
+              component={RoombedDetail}
+            />
+          </Switch>
         </ScrollTop>
       </div>
     )
   }
 }
 
-export default Position;
+export default Roombed;

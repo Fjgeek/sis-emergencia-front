@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 /* Components */
 import Header from '../../common/header';
+import { GridList } from '../../common/grid-list'
+import RoombedCard from './components/roombed-card'
+import { NavLink } from 'react-router-dom'
 /* Data */
-import RoomBedHttp from '../@data/roombed-http';
-/* React Table Component */
-import ReactTable from "react-table";
-import "react-table/react-table.css";
+import RoombedHttp from '../@data/roombed-http';
 
-class PositionList extends Component {
-  constructor(props){
+class RoombedList extends Component {
+  constructor(props) {
     super();
     this.state = {
       data: [],
@@ -16,11 +16,11 @@ class PositionList extends Component {
     }
   }
 
-  showDetail = (e, handleOriginal, rowInfo)=>{
-    if(typeof(rowInfo)!=="undefined"){
-      if( rowInfo.original.person_id !== null){
-        this.props.history.push(''+this.props.match.url+'/'+rowInfo.original.person_id);
-      }else{
+  showDetail = (e, handleOriginal, rowInfo) => {
+    if (typeof (rowInfo) !== "undefined") {
+      if (rowInfo.original.person_id !== null) {
+        this.props.history.push('' + this.props.match.url + '/' + rowInfo.original.person_id);
+      } else {
         console.error('Existe un error en ShowDetail el objeto no existe');
       }
     }
@@ -34,14 +34,15 @@ class PositionList extends Component {
   componentDidMount() {
     this.addFilterPlaceholder();
     let self = this;
-    RoomBedHttp.getAll(
-      (data)=>{
+    RoombedHttp.getList(
+      (data) => {
+        console.log(data)
         self.setState({
           data: data.result
         });
       },
-      (error)=>{
-      console.log(error);
+      (error) => {
+        console.log(error);
       }
     );
   }
@@ -50,82 +51,34 @@ class PositionList extends Component {
     return (
       <section>
         <Header
-          title = "Roles"
-          match = { this.props.match }
-          history = { this.props.history }
-          actions={[
-              {
-                on: `${this.props.match.path}/nuevo`,
-                title: 'Añadir'
-              }
-          ]}
-          theme = {{
-            background: "#6200EE",
+          title="Salas"
+          match={this.props.match}
+          history={this.props.history}
+          theme={{
+            background: "#008000",
             color: "#fff"
           }}
         />
-        <ReactTable
-          data={data}
-          filterable
-          defaultFilterMethod={(filter, row) =>{
-            return String(row[filter.id]).toLowerCase().indexOf(String(filter.value).toLowerCase()) !== -1;
-          }}
-          previousText = 'Anterior'
-          nextText = 'Siguiente'
-          loadingText = 'Cargando Datos'
-          noDataText = 'No se encontraron datos'
-          pageText = 'Página'
-          ofText = 'de'
-          rowsText = 'filas'
-
-          getTdProps={(state, rowInfo, column, instance) => {
-            let self = this;
-            return {
-              onClick: (e, handleOriginal) => {
-                self.showDetail(e, handleOriginal, rowInfo);
-              }
-            };
-          }}
-          columns={[
-            {
-              columns: [
-                {
-                  Header: "Nombre",
-                  accessor: "first_name"
-                },
-                {
-                  Header: "Apellido",
-                  accessor: "last_name"
-                },
-                {
-                  Header: "Carnet de Identidad",
-                  accessor: "ci"
-                },
-                {
-                  Header: "Cargo",
-                  accessor: "appointment"
-                },
-                {
-                  Header: "Profesión",
-                  accessor: "profession"
-                },
-                {
-                  Header: "Especialidad",
-                  accessor: "specialty"
-                },
-                {
-                  Header: "Carrera",
-                  accessor: "career_direction"
-                },
-              ]
-            }
-          ]}
-          defaultPageSize={20}
-          className="-striped -highlight"
-        />
+        <GridList>
+          {
+            data.map(el => (
+              <NavLink
+                key={el.id_room}
+                to={`${this.props.match.url}/${el.id_room}`}
+                style={{ textDecoration: 'none', color: 'inherit' }}
+              >
+                <RoombedCard
+                  label={el.room_label}
+                  subLabel={`(${el.bedsCount}) Camas`}
+                  iconSubLabel="local_hotel"
+                />
+              </NavLink>
+            ))
+          }
+        </GridList>
       </section>
     )
   }
 }
 
-export default PositionList;
+export default RoombedList;

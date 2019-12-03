@@ -1,4 +1,7 @@
 .header-container{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   background-color: #018001; /* Verde Botella */
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   padding: 20px;
@@ -7,14 +10,13 @@
 .header-image{
   display: inline-block;
   vertical-align: middle;
+  margin: 0;
   margin-left: 40px;
-  margin-right: 40px;
 }
 .header-title{
   font-size: 35px;
   font-family: 'Open Sans', sans-serif;
   color: #ffffff;
-  margin-left: 45px;
 }
 .header-title small{
   display: block;

@@ -1,87 +1,67 @@
-import React, { Component } from 'react';
-import './top-nav.css';
+import React from 'react'
+import './top-nav.css'
 /* Components */
-import TopAppBar, {
-  TopAppBarIcon,
+import {
+  TopAppBar,
   TopAppBarRow,
   TopAppBarSection,
   TopAppBarTitle,
-} from '@material/react-top-app-bar';
+  TopAppBarFixedAdjust,
+} from '@rmwc/top-app-bar'
+
 import {
-  NavLink
-} from 'react-router-dom';
+  NavLink,
+  withRouter,
+} from 'react-router-dom'
 
-import MaterialIcon from '@material/react-material-icon';
-import List, {ListItem, ListItemGraphic, ListItemText } from '@material/react-list';
+import {
+  SimpleMenu,
+  MenuItem,
+} from '@rmwc/menu'
 
-class TopNav extends Component {
-  constructor(props){
-    super();
-    this.state={
-      open: false
-    }
-  }
-  toggle = ()=>{
-    this.setState( (prev) =>({
-        open: !prev.open
-      })
-    )
-  }
-  render() {
-    const { signOut } = this.props;
-    return (
-      <div className="TopNav">
-        <TopAppBar
-          fixed
-          style={{
-            backgroundColor: '#008000'
-          }}
-        >
-          <TopAppBarRow>
-            <TopAppBarSection align='start'>
-              <TopAppBarIcon navIcon tabIndex={0}>
-                <MaterialIcon hasRipple icon='menu' onClick={() => console.log('click')}/>
-              </TopAppBarIcon>
-              <TopAppBarTitle>
-                <aside className="TopNav-user">
-                  Sistema de Emergencias
-                  <small>Administrador</small>
-                </aside>
-              </TopAppBarTitle>
-            </TopAppBarSection>
-            <TopAppBarSection align='end' role='toolbar'>
-              <TopAppBarIcon actionItem tabIndex={0} onClick={() => this.toggle() }>
-                <div>
-                  <MaterialIcon 
-                    aria-label="Menu Usuario" 
-                    hasRipple 
-                    icon='person_pin'
-                  />
-                </div>
+import { IconButton } from '@rmwc/icon-button'
 
-              </TopAppBarIcon>
-            </TopAppBarSection>
-          </TopAppBarRow>
-        </TopAppBar>
-        <div className={`TopNav-modal ${this.state.open?'':'hide'}`} onClick={ this.toggle }>
-          <List>
-            <ListItem>
-              <NavLink to="/perfil" className="TopNav-link">
-                <ListItemGraphic graphic={<MaterialIcon icon='account_circle'/>} />
-                <ListItemText primaryText='Perfil' />
-              </NavLink>
-            </ListItem>
-            <ListItem>
-              <NavLink to="/" className="TopNav-link" onClick={ signOut }>
-                <ListItemGraphic graphic={<MaterialIcon icon='exit_to_app'/>} />
-                <ListItemText primaryText='Salir' />
-              </NavLink>
-            </ListItem>
-          </List>
-        </div>
-      </div>
-    )
-  }
+const TopNav = ({
+  match,
+  signOut,
+  handleToggle
+}) => {
+  return (
+    <div className="TopNav">
+
+      <TopAppBar fixed style={{ background: '#008000' }}>
+        <TopAppBarRow>
+          <TopAppBarSection alignStart>
+            <IconButton
+              icon="menu"
+              style={{ background: '#008000', outline: 'none' }}
+              onClick={handleToggle}
+            />
+            <TopAppBarTitle>
+              <aside className="TopNav-user">
+                Sistema de Emergencias
+                <small>Admin</small>
+              </aside>
+            </TopAppBarTitle>
+          </TopAppBarSection>
+          <TopAppBarSection alignEnd>
+            <SimpleMenu handle={<IconButton icon="person_pin" />}
+              anchorCorner='topStart'
+            >
+              <MenuItem onClick={signOut}>
+                <NavLink exact={true} to={`${match.url}/perfil`} className="TopNav-link" onClick={signOut}>
+                  Perfil
+                </NavLink>
+              </MenuItem>
+              <MenuItem>
+                <div className="TopNav-link" onClick={signOut}>Salir</div>
+              </MenuItem>
+            </SimpleMenu>
+          </TopAppBarSection>
+        </TopAppBarRow>
+      </TopAppBar>
+      <TopAppBarFixedAdjust />
+    </div>
+  )
 }
-
-export default TopNav;
+export default withRouter(TopNav)

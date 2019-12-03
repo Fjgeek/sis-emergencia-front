@@ -4,19 +4,19 @@ import './remove.css';
 import '../pages/@style/container.css';
 import '../pages/@style/form.css';
 /* Components */
-import Button from '@material/react-button';
+import { Button } from '@rmwc/button';
 
-const Remove = (props)=>(
+const Remove = (props) => (
   <div className="Remove-container">
     <fieldset className="graduate-form--fieldset">
-          <legend>
-            Zona de Peligro
+      <legend>
+        Zona de Peligro
           </legend>
-          <h6 className="graduate-form--helper">{ props.text }</h6>
-          <br/>
-          <Button type="button" onClick={ props.handleEvent }>
-            { props.label }
-          </Button>
+      <h6 className="graduate-form--helper">{props.text}</h6>
+      <br />
+      <Button type="button" onClick={props.handleEvent}>
+        {props.label}
+      </Button>
     </fieldset>
   </div>
 );
@@ -30,6 +30,6 @@ Remove.propTypes = {
 Remove.defaultProps = {
   text: '',
   label: '',
-  handleEvent: ()=>{}
+  handleEvent: () => { }
 }
 export default Remove;

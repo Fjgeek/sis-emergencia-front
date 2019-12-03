@@ -1,43 +1,43 @@
-import React from 'react';
+import React from 'react'
 import {
   NavLink
-} from 'react-router-dom';
-import './navigation.css';
-import MaterialIcon from '@material/react-material-icon';
+} from 'react-router-dom'
+import './navigation.css'
+import {
+  withRouter
+} from 'react-router'
 
-
-const Navigation = (props) => {
-  let MenuEvent = () => {
-    return true;
-  };
-  if (props.movil) {
-    MenuEvent = props.handleToggle;
-  }
+const Navigation = ({
+  movil,
+  handleToggle,
+  match,
+}) => {
   return (
     <div className="Nav-container">
-      <aside className="Nav-user">
-        <MaterialIcon hasRipple icon='explore' />
-      </aside>
       <ul className="Nav-menu-list">
         <li>
-          <NavLink to="/" exact={true} activeClassName="active-menu" onClick={MenuEvent}>
+          <NavLink to={match.url} exact={true} activeClassName="active-menu" onClick={() => movil ? handleToggle() : true}>
             Emergencias
-            </NavLink>
+          </NavLink>
         </li>
         <li>
-          <NavLink to="/enfermeras" activeClassName="active-menu" onClick={MenuEvent}>
+          <NavLink to={`${match.url}enfermeras`} exact={true} activeClassName="active-menu" onClick={() => movil ? handleToggle() : true}>
             Enfermeras
-            </NavLink>
+          </NavLink>
         </li>
         <li>
-          <NavLink to="/historial" activeClassName="active-menu" onClick={MenuEvent}>
-            Historial
-            </NavLink>
+          <NavLink to={`${match.url}recepcion`} exact={true} activeClassName="active-menu" onClick={() => movil ? handleToggle() : true}>
+            Recepción
+          </NavLink>
         </li>
-
+        <li>
+          <NavLink to={`${match.url}historial`} exact={true} activeClassName="active-menu" onClick={() => movil ? handleToggle() : true}>
+            Historial
+          </NavLink>
+        </li>
       </ul>
     </div>
   )
 }
 
-export default Navigation;
+export default withRouter(Navigation)

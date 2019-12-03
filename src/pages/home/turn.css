@@ -1,12 +1,12 @@
 .turn-container{
-  padding: 80px 30px;
+  padding: 0px 30px;
 }
 .turn-btn{
   position: absolute;
   background-color: #212529!important;
-  margin-top: -55px;
   right: 30px;
-  z-index: 1;;
+  top: 220px;
+  z-index: 8;
 }
 .turn-card{
   display: inline-block;

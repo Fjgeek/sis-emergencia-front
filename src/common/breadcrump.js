@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 
 /* Components */
-import MaterialIcon from '@material/react-material-icon';
+import { Icon } from '@rmwc/icon';
 
 /* 
  *  ---DATOS DE ENTRADA---
@@ -17,42 +17,42 @@ import MaterialIcon from '@material/react-material-icon';
 
 const BreadCrump = (props) => {
   let match = String(props.match.url).split('/'),
-      routes = [],
-      routeNow = "",
-      iconNow = "";
-  let matchLimit = match.length-1;
-  match.forEach( (i,index)=>{
-    if(index===0){
+    routes = [],
+    routeNow = "",
+    iconNow = "";
+  let matchLimit = match.length - 1;
+  match.forEach((i, index) => {
+    if (index === 0) {
       routeNow += i;
       iconNow = 'home';
-    }else{
-      routeNow += "/"+i;
+    } else {
+      routeNow += "/" + i;
       iconNow = 'keyboard_arrow_right'
     }
     routes.push({
-      path:routeNow,
-      title: i==="" ? "principal" : i,
+      path: routeNow,
+      title: i === "" ? "principal" : i,
       icon: iconNow
     });
   });
   return (
     <div className="BreadCrump">
       {
-        routes.map( (route, index)=>(
+        routes.map((route, index) => (
           index !== matchLimit ?
-          <NavLink to={ route.path } key={`bc${index}`}>
-            <MaterialIcon role="button" icon={ route.icon } />
-            { route.title }
-          </NavLink>:
-          <NavLink 
-            to={ route.path } 
-            onClick={ e => e.preventDefault() } 
-            key={`bc${index}`}
-            className="BreadCrump-link-disabled"
-          >
-            <MaterialIcon role="button" icon={ route.icon } />
-            { route.title }
-          </NavLink>
+            <NavLink to={route.path} key={`bc${index}`}>
+              <Icon role="button" icon={route.icon} />
+              {route.title}
+            </NavLink> :
+            <NavLink
+              to={route.path}
+              onClick={e => e.preventDefault()}
+              key={`bc${index}`}
+              className="BreadCrump-link-disabled"
+            >
+              <Icon role="button" icon={route.icon} />
+              {route.title}
+            </NavLink>
         ))
       }
     </div>
