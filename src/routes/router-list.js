@@ -1,31 +1,28 @@
-import React from 'react';
-import {
-  Route,
-  Switch
-} from 'react-router-dom';
-import Loadable from 'react-loadable';
+import React from "react";
+import { Route, Switch } from "react-router-dom";
+import Loadable from "react-loadable";
 
 /*loading*/
-import Loading from '../common/loading';
-import NoMatch from '../common/notmatch';
+import Loading from "../common/loading";
+import NoMatch from "../common/notmatch";
 
 const Home = Loadable({
-  loader: () => import('../pages/Home'),
-  loading: Loading
+  loader: () => import("../pages/home"),
+  loading: Loading,
 });
 
 const Nurse = Loadable({
-  loader: () => import('../pages/Nurse'),
-  loading: Loading
+  loader: () => import("../pages/nurse"),
+  loading: Loading,
 });
 
 const Roombed = Loadable({
-  loader: () => import('../pages/Roombed'),
-  loading: Loading
-})
+  loader: () => import("../pages/roombed"),
+  loading: Loading,
+});
 const Demand = Loadable({
-  loader: () => import('../pages/Demand'),
-  loading: Loading
+  loader: () => import("../pages/demand"),
+  loading: Loading,
 });
 
 const RouterList = (props) => {
@@ -37,8 +34,7 @@ const RouterList = (props) => {
       <Route path="/historial" component={Demand} />
       <Route component={NoMatch} />
     </Switch>
-  )
-}
-
+  );
+};
 
 export default RouterList;

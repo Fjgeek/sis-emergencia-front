@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
-import './main.css'
+import React, { useState, useEffect } from "react"
+import PropTypes from "prop-types"
+import "./main.css"
 /* Components */
-import Navigation from '../Menu/navigation'
-import TopNav from '../Menu/top-nav'
+import Navigation from "../menu/navigation"
+import TopNav from "../menu/top-nav"
 import {
   Drawer,
   DrawerHeader,
@@ -11,13 +11,13 @@ import {
   DrawerSubtitle,
   DrawerContent,
   DrawerAppContent,
-} from '@rmwc/drawer'
+} from "@rmwc/drawer"
 
 const mediaQuery = {
   match: null,
   init: (fn) => {
     if (!mediaQuery.match) {
-      mediaQuery.match = window.matchMedia('(max-width: 968px)')
+      mediaQuery.match = window.matchMedia("(max-width: 968px)")
       mediaQuery.match.addListener((e) => {
         fn(e.currentTarget.matches)
       })
@@ -27,13 +27,10 @@ const mediaQuery = {
     mediaQuery.match = null
   },
   check: () => {
-    return window.matchMedia('(max-width: 968px)').matches
-  }
+    return window.matchMedia("(max-width: 968px)").matches
+  },
 }
-const Main = ({
-  signOut,
-  children
-}) => {
+const Main = ({ signOut, children }) => {
   const [toggle, setToggle] = useState(!mediaQuery.check())
   const [movil, setMovil] = useState(mediaQuery.check())
 
@@ -54,37 +51,29 @@ const Main = ({
   return (
     <div>
       <nav>
-        <TopNav
-          signOut={signOut}
-          handleToggle={handleToggle}
-        />
+        <TopNav signOut={signOut} handleToggle={handleToggle} />
       </nav>
       <div className="main-panel">
-        <div style={{ overflow: 'hidden', position: 'relative' }}>
+        <div style={{ overflow: "hidden", position: "relative" }}>
           <Drawer
             modal={movil}
             dismissible={!movil}
             open={toggle}
             onClose={() => setToggle(false)}
-            style={{ position: 'fixed' }}
+            style={{ position: "fixed" }}
           >
             <DrawerHeader>
               <DrawerTitle>Menu</DrawerTitle>
               <DrawerSubtitle>Administrador</DrawerSubtitle>
             </DrawerHeader>
             <DrawerContent>
-              <Navigation
-                movil={movil}
-                handleToggle={handleToggle}
-              />
+              <Navigation movil={movil} handleToggle={handleToggle} />
             </DrawerContent>
           </Drawer>
 
           {/* Optional DrawerAppContent */}
           <DrawerAppContent>
-            <section className="Main-container">
-              {children}
-            </section>
+            <section className="Main-container">{children}</section>
           </DrawerAppContent>
         </div>
       </div>
@@ -94,6 +83,6 @@ const Main = ({
 
 Main.propTypes = {
   signOut: PropTypes.func,
-  children: PropTypes.element.isRequired
+  children: PropTypes.element.isRequired,
 }
-export default Main;
+export default Main
